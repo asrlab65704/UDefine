@@ -1,10 +1,13 @@
 package com.example.udefine.Database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
+import java.util.List;
 
 
 @Dao
@@ -23,6 +26,12 @@ public interface MyDao {
     @Query("select * from Notes")
     Notes[] getNotes();
 
+    @Query("SELECT * from NoteList ORDER BY NoteID ASC")
+    LiveData<List<NoteList>> getAllNoteList();
+
+    @Query("SELECT * from Notes ORDER BY `Index` ASC")
+    LiveData<List<NoteList>> getAllNotes();
+
     @Query("select * from Notes where NoteID = :noteID")
     Notes[] getNotesFromID(int noteID);
 
@@ -32,6 +41,9 @@ public interface MyDao {
 
     @Query("select LayoutID from NoteList where NoteID = :noteID")
     int getLayoutIDFromNoteID(int noteID);
+
+    @Query("select count(1) from NoteList")
+    int getNumberOfNotes();
 
     //----------更新---------//
     @Update
