@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Put initial data into the word list.
+        // TODO: Testing data. Put initial data into the word list.
         for (int i = 0; i < 20; i++) {
             mNoteTitleList.addLast("Title-" + i);
             mNoteTimeList.addLast("Time:" + i);
