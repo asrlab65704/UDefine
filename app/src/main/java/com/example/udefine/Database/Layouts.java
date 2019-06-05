@@ -1,4 +1,4 @@
-package com.example.udefine;
+package com.example.udefine.Database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.PrimaryKey;
@@ -22,9 +22,11 @@ public class Layouts {
         this.mFormat = Format;
     }
 
-    //public void setLayoutID(String LayoutID){this.mLayoutID = LayoutID;}
+
+    public void setmIndex(int idx){this.mIndex=idx;}
     public int getIndex(){return this.mIndex;}
     public int getLayoutID(){return this.mLayoutID;}
     public String getLayoutName(){return this.mLayoutName;}
     public int getFormat(){return this.mFormat;}
+
 }
