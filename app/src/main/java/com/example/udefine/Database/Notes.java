@@ -30,5 +30,6 @@ public class Notes {
     public int getIndex(){return this.index;}
     public String getTitle(){return this.title;}
     public String getContent(){return this.content;}
+    public int getNoteID(){return  this.noteID;}
 
 }

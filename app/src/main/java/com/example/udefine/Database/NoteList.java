@@ -26,11 +26,11 @@ public class NoteList {
     @ColumnInfo(name = "LayoutID")
     private int layoutID;
 
-    public NoteList(String title,String time,String tag, int layout) {
+    public NoteList(String title,String time,String tag, int layoutID) {
         this.title = title;
         this.time = time;
         this.tag = tag;
-        this.layoutID = layout;
+        this.layoutID = layoutID;
     }
 
     public void setNoteID(int i){

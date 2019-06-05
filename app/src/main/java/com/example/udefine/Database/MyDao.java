@@ -13,13 +13,22 @@ import java.util.List;
 @Dao
 public interface MyDao {
     //----------新增---------//
+    /*Note*/
     @Insert
     void insertNotelist(NoteList noteList);
 
     @Insert
     void insertNote(Notes notes);
 
+    /*Layout*/
+    @Insert
+    void insertLayoutlist(LayoutList layoutList);
+
+    @Insert
+    void insertLayouts(Layouts layouts);
+
     //----------搜尋---------//
+    /*Note*/
     @Query("select * from NoteList")
     NoteList[] getNoteList();
 
@@ -30,7 +39,7 @@ public interface MyDao {
     LiveData<List<NoteList>> getAllNoteList();
 
     @Query("SELECT * from Notes ORDER BY `Index` ASC")
-    LiveData<List<NoteList>> getAllNotes();
+    LiveData<List<Notes>> getAllNotes();
 
     @Query("select * from Notes where NoteID = :noteID")
     Notes[] getNotesFromID(int noteID);
@@ -44,6 +53,13 @@ public interface MyDao {
 
     @Query("select count(1) from NoteList")
     int getNumberOfNotes();
+
+    /*Layout*/
+    @Query("SELECT * from LayoutList ORDER BY LayoutID ASC")
+    LiveData<List<LayoutList>> getAllLayoutList();
+
+    @Query("SELECT * from Layouts ORDER BY `Index` ASC")
+    LiveData<List<Layouts>> getAllLayouts();
 
     //----------更新---------//
     @Update
@@ -60,6 +76,7 @@ public interface MyDao {
 
 
     //----------刪除---------//
+    /*Note*/
     @Delete
     void deleteNote(Notes notes);
 
@@ -77,6 +94,25 @@ public interface MyDao {
 
     @Query("delete from Notes")
     void deleteAllNotes();
+
+    /*Layout*/
+    @Delete
+    void deleteLayout(Layouts layouts);
+
+    @Query("delete from Layouts where LayoutID = :layoutID")
+    void deleteLayout(int layoutID);
+
+    @Delete
+    void deleteLayoutList(LayoutList layoutList);
+
+    @Query("delete from LayoutList where LayoutID = :layoutID")
+    void deleteLayoutList(int layoutID);
+
+    @Query("delete from LayoutList")
+    void deleteAllLayoutList();
+
+    @Query("delete from Layouts")
+    void deleteAllLayouts();
 
 
 }
