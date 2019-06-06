@@ -30,7 +30,7 @@ public class NoteListAdapter extends
         this.mNoteTimeList = timeList;
         this.mNoteTagList = tagList;
     }
-//
+
     @Override
     public NoteListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.note_list_item, parent, false);

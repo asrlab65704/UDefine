@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Default toolbar setting
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         // Default FAB setting
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
                 Intent intent = new Intent(MainActivity.this, NewNote.class);
 //                String message = mMessageEditText.getText().toString();
@@ -81,8 +82,16 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        // Go to LayoutSelectionActivity
+        if (id == R.id.action_layout_selection) {
+            Intent intent = new Intent(MainActivity.this, LayoutSelection.class);
+//                String message = mMessageEditText.getText().toString();
+//                intent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(intent);
+        } else if (id == R.id.action_delete_note) {
+
+            Toast.makeText(this, "Delete clicked!", Toast.LENGTH_LONG).show();
+
             return true;
         }
 
