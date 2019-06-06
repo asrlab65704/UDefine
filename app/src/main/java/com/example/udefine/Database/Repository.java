@@ -120,6 +120,13 @@ public class Repository {
     }
 
     /*Layout*/
+    public void deleteLayout(int layoutID){
+        int[] arr = new int[1];
+        arr[0] = layoutID;
+        new deleteLayoutByLayoutIDAsyncTask(mMyDao).execute(arr);
+    }
+
+
     public void deleteLayoutList(LayoutList layoutList) {
         new deleteLayoutListAsyncTask(mMyDao).execute(layoutList);
     }
@@ -367,6 +374,20 @@ public class Repository {
         @Override
         protected Void doInBackground(final LayoutList... params) {
             mAsyncTaskDao.deleteLayoutList(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteLayoutByLayoutIDAsyncTask extends AsyncTask<int[], Void, Void> {
+        private MyDao mAsyncTaskDao;
+
+        deleteLayoutByLayoutIDAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final int[]... params) {
+            mAsyncTaskDao.deleteLayout(params[0][0]);
             return null;
         }
     }
