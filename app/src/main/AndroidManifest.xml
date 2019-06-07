@@ -10,9 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EditLayout"
+            android:label="@string/title_activity_edit_layout"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".LayoutElement"
+            android:label="@string/title_activity_layout_element"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewLayout"
+            android:label="@string/title_activity_new_layout"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".LayoutSelection"
             android:label="@string/title_activity_layout_selection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NewNote"
             android:label="@string/title_activity_new_note"

@@ -1,5 +1,6 @@
 package com.example.udefine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,8 +33,10 @@ public class LayoutSelection extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(LayoutSelection.this, NewLayout.class);
+//                String message = mMessageEditText.getText().toString();
+//                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
             }
         });
 
@@ -52,4 +55,10 @@ public class LayoutSelection extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void edit_layout(View view) {
+        Intent intent = new Intent(LayoutSelection.this, EditLayout.class);
+//                String message = mMessageEditText.getText().toString();
+//                intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
 }
