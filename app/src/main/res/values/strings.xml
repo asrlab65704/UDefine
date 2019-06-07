@@ -18,4 +18,10 @@
     <string name="title_activity_new_layout">NewLayout</string>
     <string name="title_activity_layout_element">LayoutElement</string>
     <string name="title_activity_edit_layout">EditLayout</string>
+
+    <string name="title_title">Title</string>
+    <string name="time_title">Time</string>
+    <string name="date_button">Date</string>
+    <string name="time_button">Time</string>
+    <string name="tag_title">Tag</string>
 </resources>
