@@ -215,9 +215,9 @@ public class widgetManager {
         /* spinner */
         Spinner tagSpinner = new Spinner(mainContext, Spinner.MODE_DROPDOWN);
         tagSpinner.setId(View.generateViewId());
-        final String[] tag_colors = {
-                "Select Tag", "#00ff00", "#ffff00", "#ff751a", "#ff0000",
-                "#993399", "#6666ff"};
+        final String[] tag_colors = mainContext.getResources()
+                .getStringArray(R.array.tag_color_spinner);
+
         ArrayList<tagItemStateVO> listVOs = new ArrayList<>();
 
         for (int i = 0; i < tag_colors.length; i++) {
