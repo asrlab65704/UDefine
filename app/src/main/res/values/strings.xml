@@ -50,4 +50,5 @@
     <string name="time_button">Time</string>
     <string name="tag_title">Tag</string>
     <string name="title_activity_edit_note">EditNote</string>
+    <string name="new_layout_name_title">Layout Name</string>
 </resources>
