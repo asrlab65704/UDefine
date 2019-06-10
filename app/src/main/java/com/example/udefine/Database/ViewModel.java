@@ -62,6 +62,14 @@ public class ViewModel extends AndroidViewModel {
         mRepository.deleteLayout(layoutID);
     }
 
+    public void updateNote(Notes notes)
+    {
+        mRepository.updateNote(notes);
+    }
 
+    public void updateNoteList(NoteList noteList)
+    {
+        mRepository.updateNoteList(noteList);
+    }
 
 }

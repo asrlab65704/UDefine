@@ -48,6 +48,14 @@ public interface MyDao {
     @Query("select MAX(NoteID) from NoteList")
     int getLastNoteID();
 
+    /*用來設定layout 範例*/
+    @Query("select MAX(LayoutID) from LayoutList")
+    int getLastLayoutListID();
+
+    /*用來設定Note 範例*/
+    @Query("select MAX(LayoutID) from NoteList")
+    int getLastNoteListID();
+
     @Query("select LayoutID from NoteList where NoteID = :noteID")
     int getLayoutIDFromNoteID(int noteID);
 
@@ -114,5 +122,11 @@ public interface MyDao {
     @Query("delete from Layouts")
     void deleteAllLayouts();
 
+    /**用來判斷Database是否是初始狀態**/
+    @Query("SELECT * from LayoutList LIMIT 1")
+    LayoutList[] getAnyLayoutList();
+
+    @Query("SELECT * from NoteList LIMIT 1")
+    NoteList[] getAnyNoteList();
 
 }
