@@ -81,17 +81,24 @@ public class NewNote extends AppCompatActivity {
     }
 
     public void saveNote(View view) {
-        ArrayList<Notes> n = widgetsManager.getLayoutValue(0);
-        // TODO: Store to DB
-        // 給 notelist  值 => note table
-        //mNoteList = new NoteList("Title", "08/06/2019,14:30", null, 1);
-        // insert note list
-        //mViewModel.insertNoteList(mNoteList);
-        // get last note id
-        //int id = mViewModel.getLastNoteID();
-        //  TODO: 一個欄位 insert 一次 => ArrayList<Notes>
-        //mNotes = new Notes(id, "title", "title");
+        // TODO: Get layout ID from Main Activity
+        int layoutID = 1;
 
+        // Get time, time, tag
+        ArrayList<String> titleTimeTag = widgetsManager.getTitleTimeTag();
+        // Insert to note table
+        String noteTitle = titleTimeTag.get(0);
+        String time = titleTimeTag.get(1) == null ? null:
+                titleTimeTag.get(1);
+        String tag = titleTimeTag.get(2) == null ? null:
+                titleTimeTag.get(2);
+
+        //mNoteList = new NoteList(noteTitle, time, tag, layoutID);
+        //mViewModel.insertNoteList(mNoteList);
+
+        // Insert to note title/content table
+        //ArrayList<Notes> noteColumns = widgetsManager.getLayoutValue(mViewModel.getLastNoteID());
+        //mViewModel.insertNotes(noteColumns);
 
         finish();
     }
