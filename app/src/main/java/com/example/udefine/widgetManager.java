@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.udefine.Database.Notes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +26,8 @@ public class widgetManager {
     private Context mainContext;
     private FragmentManager fragmentManager;
     private int margin;
+
+    /* A hash map record View id and title */
     private HashMap<Integer, String> title_id_list;
 
     public widgetManager(Context context, LinearLayout parent,
@@ -116,13 +120,15 @@ public class widgetManager {
         }
     }
 
-    public void getLayoutValue() {
+    public ArrayList<Notes> getLayoutValue(int noteID) {
         int id;
-        String title;
+        String title, content = "";
+        ArrayList<Notes> notes = new ArrayList<Notes>();
         Iterator<HashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
 
         while (iterator.hasNext()) {
+            // get Title and View
             HashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
             title = entry.getValue();
@@ -130,22 +136,49 @@ public class widgetManager {
 
             if (v instanceof EditText) {
                 EditText e = (EditText)v;
-                Log.d("widget", title + ":" + e.getText().toString());
+                content = e.getText().toString();
+                //Log.d("widget", title + ":" + e.getText().toString());
             } else if (v instanceof Button) {
                 Button b = (Button)v;
-                Log.d("widget", title + ":" + b.getText().toString());
+                String tmp = b.getText().toString();
+
+                // if Date and Time is not set, content remain ""
+                if (tmp.equals("Date")) {
+                    continue;
+                } else if (!tmp.equals("Time")) {
+                    content = content + tmp;
+                    // date string, continue to get time
+                    if (tmp.contains("/")) {
+                        content = content + ",";
+                        continue;
+                    }
+                }
+                //Log.d("widget", title + ":" + b.getText().toString());
             } else if (v instanceof Spinner) {
                 Spinner s = (Spinner)v;
                 tagListAdapter adapter = (tagListAdapter)s.getAdapter();
                 ArrayList<tagItemStateVO> listState = adapter.getSelectedItems();
+                boolean first = false;
                 for(int i = 0; i < listState.size(); ++i) {
                     tagItemStateVO tmp = listState.get(i);
                     if (tmp.isSelected()) {
-                        Log.d("widget", tmp.getTitle());
+                        if (first) {
+                            content = content + ',';
+                        } else {
+                            first = true;
+                        }
+                        content = content + tmp.getTitle();
                     }
                 }
             }
+
+            // Add Notes object to list
+            Log.d("widget", title + " " + content);
+            Notes n = new Notes(noteID, title, content);
+            notes.add(n);
+            content = "";
         }
+        return notes;
     }
 
     public void addEditText(String title) {
