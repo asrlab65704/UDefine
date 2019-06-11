@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Repository {
 
@@ -14,33 +15,20 @@ public class Repository {
     private LiveData<List<Notes>> mNotes;
     private LiveData<List<Layouts>> mLayouts;
 
-    private int mLastNoteID;
-    private int mLastLayoutID;
-    private int mNumberOfNotes;
-
     Repository(Application application) {
         MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
         mMyDao = db.myDao();
 
         /*Get live data*/
-        mLastNoteID = mMyDao.getLastNoteID();
-        mLastLayoutID = mMyDao.getLastLayoutListID();
         mNoteList = mMyDao.getAllNoteList();
         mLayoutList = mMyDao.getAllLayoutList();
         mNotes = mMyDao.getAllNotes();
         mLayouts = mMyDao.getAllLayouts();
-        mNumberOfNotes = mMyDao.getNumberOfNotes();
     }
-
-    public int getLastNoteID(){return mLastNoteID;}
-
-    public int getLastLayoutID(){return mLastLayoutID;}
 
     public int getLayoutIDFromNoteID(int noteID){
         return mMyDao.getLayoutIDFromNoteID(noteID);
     }
-
-    int getNumberOfNotes(){return mNumberOfNotes;}
 
     LiveData<List<NoteList>> getAllNoteList() { return mNoteList; }
 
@@ -49,6 +37,47 @@ public class Repository {
     LiveData<List<Notes>> getAllNotes() { return mNotes; }
 
     LiveData<List<Layouts>> getAllLayouts() { return mLayouts; }
+
+    //----------Get-----------//
+    public int getLastNoteID(){
+        int mLastNoteID = 0;
+        try {
+            String mLastNoteID_str = new getLastNoteIDAsyncTask(mMyDao).execute().get();
+            mLastNoteID = Integer.parseInt(mLastNoteID_str);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mLastNoteID;
+    }
+    public int getLastLayoutID()
+    {
+        int mLastLayoutID = 0;
+        try {
+            String mLastLayoutID_str = new getLastLayoutIDAsyncTask(mMyDao).execute().get();
+            mLastLayoutID = Integer.parseInt(mLastLayoutID_str);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mLastLayoutID;
+    }
+    public int getNumberOfNotes()
+    {
+        int mNumberOfNotes = 0;
+        try {
+            String mNumberOfNotes_str = new getNumberOfNotesAsyncTask(mMyDao).execute().get();
+            mNumberOfNotes = Integer.parseInt(mNumberOfNotes_str);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mNumberOfNotes;
+    }
+
 
 
     //----------新增---------//
@@ -437,5 +466,52 @@ public class Repository {
             return null;
         }
     }
+
+    /** get **/
+    private static class getLastNoteIDAsyncTask extends AsyncTask<Void, Void, String> {
+        private MyDao mAsyncTaskDao;
+
+        getLastNoteIDAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String LastNoteID = Integer.toString(mAsyncTaskDao.getLastNoteID());
+            return LastNoteID;
+        }
+
+    }
+
+    private static class getLastLayoutIDAsyncTask extends AsyncTask<Void, Void, String> {
+        private MyDao mAsyncTaskDao;
+
+        getLastLayoutIDAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String LastLayoutID = Integer.toString(mAsyncTaskDao.getLastLayoutListID());
+            return LastLayoutID;
+        }
+
+    }
+
+    private static class getNumberOfNotesAsyncTask extends AsyncTask<Void, Void, String> {
+        private MyDao mAsyncTaskDao;
+
+        getNumberOfNotesAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String NumberOfNotes = Integer.toString(mAsyncTaskDao.getNumberOfNotes());
+            return NumberOfNotes;
+        }
+
+    }
+
 
 }
