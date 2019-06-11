@@ -85,7 +85,7 @@ public class NewNote extends AppCompatActivity {
         int layoutID = 1;
 
         // Get time, time, tag
-        ArrayList<String> titleTimeTag = widgetsManager.getTitleTimeTag();
+        ArrayList<String> titleTimeTag = widgetsManager.getNoteTitleTimeTag();
         // Insert to note table
         String noteTitle = titleTimeTag.get(0);
         String time = titleTimeTag.get(1) == null ? null:
@@ -97,7 +97,7 @@ public class NewNote extends AppCompatActivity {
         //mViewModel.insertNoteList(mNoteList);
 
         // Insert to note title/content table
-        //ArrayList<Notes> noteColumns = widgetsManager.getLayoutValue(mViewModel.getLastNoteID());
+        //ArrayList<Notes> noteColumns = widgetsManager.getNoteContent(mViewModel.getLastNoteID());
         //mViewModel.insertNotes(noteColumns);
 
         finish();
