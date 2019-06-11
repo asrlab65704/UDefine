@@ -61,7 +61,7 @@ public class EditNote extends AppCompatActivity {
     }
 
     public void saveNote(View view) {
-        //widgetsManager.getLayoutValue();
+        //widgetsManager.getNoteContent();
         // TODO: update to DB
         finish();
     }

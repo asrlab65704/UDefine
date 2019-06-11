@@ -120,7 +120,7 @@ public class widgetManager {
         }
     }
 
-    public ArrayList<String> getTitleTimeTag() {
+    public ArrayList<String> getNoteTitleTimeTag() {
         int id, counter = 0;
         String content = "";
         ArrayList<String> titleTimeTag = new ArrayList<String>();
@@ -179,7 +179,7 @@ public class widgetManager {
         return titleTimeTag;
     }
 
-    public ArrayList<Notes> getLayoutValue(int noteID) {
+    public ArrayList<Notes> getNoteContent(int noteID) {
         int id;
         String title, content = "";
         ArrayList<Notes> notes = new ArrayList<Notes>();
