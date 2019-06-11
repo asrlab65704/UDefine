@@ -29,7 +29,15 @@ public class tagListAdapter extends ArrayAdapter<tagItemStateVO> {
     }
 
     public ArrayList<tagItemStateVO> getSelectedItems() {
-        return listState;
+        ArrayList<tagItemStateVO> selected = new
+                ArrayList<tagItemStateVO>();
+        for(int i = 0; i < listState.size(); ++i) {
+            tagItemStateVO tmp = listState.get(i);
+            if (tmp.isSelected()) {
+                selected.add(tmp);
+            }
+        }
+        return selected;
     }
 
     @Override

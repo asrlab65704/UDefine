@@ -120,6 +120,65 @@ public class widgetManager {
         }
     }
 
+    public ArrayList<String> getTitleTimeTag() {
+        int id, counter = 0;
+        String content = "";
+        ArrayList<String> titleTimeTag = new ArrayList<String>();
+        Iterator<HashMap.Entry<Integer, String>> iterator =
+                title_id_list.entrySet().iterator();
+
+        while (iterator.hasNext() && counter <= 2) {
+            // get Title and View
+            HashMap.Entry<Integer, String> entry = iterator.next();
+            id = entry.getKey();
+            View v = parentLinearLayout.findViewById(id);
+
+            if (v instanceof EditText) {
+                // get Title
+                EditText e = (EditText) v;
+                content = e.getText().toString();
+            } else if (v instanceof Button) {
+                // get date + time
+                Button b = (Button) v;
+                String tmp = b.getText().toString();
+
+                // if Date and Time is not set, set content to null
+                if (tmp.equals("Date")) {
+                    continue;
+                } else if (tmp.equals("Time")) {
+                    content = null;
+                } else {
+                    content = content + tmp;
+                    // date string, continue to get time
+                    if (tmp.contains("/")) {
+                        content = content + ",";
+                        continue;
+                    }
+                }
+                //Log.d("widget", title + ":" + b.getText().toString());
+            } else if (v instanceof Spinner) {
+                Spinner s = (Spinner) v;
+                tagListAdapter adapter = (tagListAdapter) s.getAdapter();
+                ArrayList<tagItemStateVO> listState = adapter.getSelectedItems();
+
+                if (listState.size() == 0) {
+                    content = null;
+                } else {
+                    for (int i = 0; i < listState.size(); ++i) {
+                        tagItemStateVO tmp = listState.get(i);
+                        if (i != 0) {
+                            content = content + ',';
+                        }
+                        content = content + tmp.getTitle();
+                    }
+                }
+            }
+            titleTimeTag.add(content);
+            ++counter;
+        }
+        return titleTimeTag;
+    }
+
     public ArrayList<Notes> getLayoutValue(int noteID) {
         int id;
         String title, content = "";
@@ -142,10 +201,12 @@ public class widgetManager {
                 Button b = (Button)v;
                 String tmp = b.getText().toString();
 
-                // if Date and Time is not set, content remain ""
+                // if Date and Time is not set, set content to null
                 if (tmp.equals("Date")) {
                     continue;
-                } else if (!tmp.equals("Time")) {
+                } else if (tmp.equals("Time")) {
+                    content = null;
+                } else {
                     content = content + tmp;
                     // date string, continue to get time
                     if (tmp.contains("/")) {
@@ -158,14 +219,14 @@ public class widgetManager {
                 Spinner s = (Spinner)v;
                 tagListAdapter adapter = (tagListAdapter)s.getAdapter();
                 ArrayList<tagItemStateVO> listState = adapter.getSelectedItems();
-                boolean first = false;
-                for(int i = 0; i < listState.size(); ++i) {
-                    tagItemStateVO tmp = listState.get(i);
-                    if (tmp.isSelected()) {
-                        if (first) {
+
+                if (listState.size() == 0) {
+                    content = null;
+                } else {
+                    for (int i = 0; i < listState.size(); ++i) {
+                        tagItemStateVO tmp = listState.get(i);
+                        if (i != 0) {
                             content = content + ',';
-                        } else {
-                            first = true;
                         }
                         content = content + tmp.getTitle();
                     }
