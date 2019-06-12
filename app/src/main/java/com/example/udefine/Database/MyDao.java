@@ -35,6 +35,9 @@ public interface MyDao {
     //@Query("select * from Notes") //被livedata取代
     //Notes[] getNotes();
 
+    @Query("SELECT NoteID from NoteList")
+    int [] getAllNoteID();
+
     @Query("SELECT * from NoteList ORDER BY NoteID ASC")
     LiveData<List<NoteList>> getAllNoteList();
 
