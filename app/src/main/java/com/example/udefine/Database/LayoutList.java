@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class LayoutList {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "LayoutID")
-    private int layoutID=1;
+    private int layoutID;
 
     @ColumnInfo(name = "LayoutName")
     private String layoutName;

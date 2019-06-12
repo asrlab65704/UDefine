@@ -4,26 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Debug;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.udefine.Database.NoteList;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class NoteListAdapter extends
         RecyclerView.Adapter<NoteListAdapter.NoteListHolder> {
 
-    // TODO: This is testing data, should be replace later.
-    private final LinkedList<String> mNoteTitleList;
-    private final LinkedList<String> mNoteTimeList;
-    private final LinkedList<String> mNoteTagList;
+    // DB Data
+    private List<NoteList> mNoteList;
+
     private LayoutInflater mInflater;
 
     // for adapter context
@@ -37,17 +41,12 @@ public class NoteListAdapter extends
     private boolean del_flag = false;
     private boolean delete_note[] = new boolean[200];
 
-    public NoteListAdapter(Context context,
-                           LinkedList<String> titleList,
-                           LinkedList<String> timeList,
-                           LinkedList<String> tagList) {
+    public NoteListAdapter(Context context) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
 
         // TODO: This is testing data, should be replace later.
-        this.mNoteTitleList = titleList;
-        this.mNoteTimeList = timeList;
-        this.mNoteTagList = tagList;
+
 
         // fill delete_note with false
         Arrays.fill(delete_note, Boolean.FALSE);
@@ -64,9 +63,9 @@ public class NoteListAdapter extends
     public void onBindViewHolder(@NonNull NoteListHolder noteListHolder, int position) {
 
         // TODO: This is testing data, should be replace later.
-        String mTitleCurrent = mNoteTitleList.get(position);
-        String mTimeCurrent = mNoteTimeList.get(position);
-        String mTagCurrent = mNoteTagList.get(position);
+        String mTitleCurrent = mNoteList.get(position).getTitle();
+        String mTimeCurrent = mNoteList.get(position).getTime();
+        String mTagCurrent = mNoteList.get(position).getTag();
 
         noteListHolder.NoteTitleView.setText(mTitleCurrent);
         noteListHolder.NoteTimeView.setText(mTimeCurrent);
@@ -85,7 +84,10 @@ public class NoteListAdapter extends
 
     @Override
     public int getItemCount() {
-        return mNoteTitleList.size();
+        if (mNoteList != null)
+            return mNoteList.size();
+        else
+            return 0;
     }
 
     class NoteListHolder extends RecyclerView.ViewHolder {
@@ -121,6 +123,11 @@ public class NoteListAdapter extends
         }
     }
 
+    // function for DB control
+    public void setNoteList(List<NoteList> noteLists) {
+        this.mNoteList = noteLists;
+    }
+
     // function for delete mode
     public boolean get_del_mode() { return del_flag; }
     public void enable_del_mode() { del_flag = true; }
@@ -138,9 +145,9 @@ public class NoteListAdapter extends
         int del_num = 0;
         for (int i = 0; i < note_num; i++) {
             if (delete_note[i]) {
-                mNoteTitleList.remove(i - del_num);
-                mNoteTimeList.remove(i - del_num);
-                mNoteTagList.remove(i - del_num);
+//                mNoteTitleList.remove(i - del_num);
+//                mNoteTimeList.remove(i - del_num);
+//                mNoteTagList.remove(i - del_num);
                 del_num++;
             }
         }

@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 public class NoteList {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "NoteID")
-    private int noteID=1;
+    private int noteID;
 
     @ColumnInfo(name = "Title")
     private String title;
