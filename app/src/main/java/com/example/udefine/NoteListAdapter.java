@@ -8,7 +8,6 @@ import android.os.Debug;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +125,7 @@ public class NoteListAdapter extends
     // function for DB control
     public void setNoteList(List<NoteList> noteLists) {
         this.mNoteList = noteLists;
+        notifyDataSetChanged();
     }
 
     // function for delete mode

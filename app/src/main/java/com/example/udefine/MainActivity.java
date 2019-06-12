@@ -53,15 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // DB parameter initialize
-        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
-        mViewModel.getAllNoteList().observe(this, new Observer<List<NoteList>>() {
-            @Override
-            public void onChanged(@Nullable List<NoteList> noteLists) {
-                mAdapter.setNoteList(noteLists);
-            }
-        });
-
         // Get a handle to the RecyclerView.
         mRecyclerView = findViewById(R.id.note_list_recyclerview);
         // Create an adapter and supply the data to be displayed.
@@ -70,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // DB parameter initialize
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        mViewModel.getAllNoteList().observe(this, new Observer<List<NoteList>>() {
+            @Override
+            public void onChanged(@Nullable final List<NoteList> noteLists) {
+                mAdapter.setNoteList(noteLists);
+
+            }
+        });
 
         // Get buttons used in delete mode
         mCancelBtn = findViewById(R.id.del_note_cancel_btn);
