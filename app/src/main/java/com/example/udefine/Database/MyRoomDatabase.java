@@ -8,6 +8,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 @Database(entities = {NoteList.class, LayoutList.class,Notes.class,Layouts.class}, version = 1, exportSchema = false)
 public abstract class MyRoomDatabase extends RoomDatabase {
@@ -51,6 +52,8 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             // If we have no words, then create the initial list of words
             if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
+                Log.d("TestMsg","Initiallize default data...");
+
                 /**創建預設LayoutList**/
                 LayoutList DefaultLayoutList = new LayoutList("Default");
                 mDao.insertLayoutlist(DefaultLayoutList);
@@ -78,6 +81,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                     Notes DefaultNotes = new Notes(DefaultNoteID, DefaultTitle[i], DefaultContent[i]);
                     mDao.insertNote(DefaultNotes);
                 }
+                Log.d("TestMsg","Initiallize default data success.");
             }
             return null;
         }

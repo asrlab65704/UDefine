@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Notes {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Index")
-    private int index=1;
+    private int index;
 
     @ColumnInfo(name = "NoteID")
     private int noteID;

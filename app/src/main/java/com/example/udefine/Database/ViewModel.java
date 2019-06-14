@@ -28,10 +28,10 @@ public class ViewModel extends AndroidViewModel {
     }
 
     /*Getter*/
-    LiveData<List<NoteList>> getAllNoteList() { return mAllNoteList; }
-    LiveData<List<LayoutList>> getAllLayoutList() { return mAllLayoutList; }
-    LiveData<List<Notes>> getAllNotes() { return mAllNotes; }
-    LiveData<List<Layouts>> getAllLayouts() { return mAllLayouts; }
+    public  LiveData<List<NoteList>> getAllNoteList() { return mAllNoteList; }
+    public LiveData<List<LayoutList>> getAllLayoutList() { return mAllLayoutList; }
+    public LiveData<List<Notes>> getAllNotes() { return mAllNotes; }
+    public LiveData<List<Layouts>> getAllLayouts() { return mAllLayouts; }
 
 
     /*Wrapper*/

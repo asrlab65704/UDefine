@@ -1,7 +1,10 @@
 package com.example.udefine;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,14 +17,17 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.udefine.Database.NoteList;
+import com.example.udefine.Database.Notes;
+import com.example.udefine.Database.ViewModel;
+
 import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO:testing data, should be remove later.
-    private final LinkedList<String> mNoteTitleList = new LinkedList<>();
-    private final LinkedList<String> mNoteTimeList = new LinkedList<>();
-    private final LinkedList<String> mNoteTagList = new LinkedList<>();
+    // DB data
+    private ViewModel mViewModel;
 
     private RecyclerView mRecyclerView;
     private NoteListAdapter mAdapter;
@@ -42,31 +48,29 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 Intent intent = new Intent(MainActivity.this, NewNote.class);
-//                String message = mMessageEditText.getText().toString();
-//                intent.putExtra(EXTRA_MESSAGE, message);
                 startActivity(intent);
             }
         });
 
-        // TODO: Testing data. Put initial data into the word list.
-        for (int i = 0; i < 20; i++) {
-            mNoteTitleList.addLast("Title-" + i);
-            mNoteTimeList.addLast("Time:" + i);
-            mNoteTagList.addLast("Tag-" + i);
-        }
-
         // Get a handle to the RecyclerView.
         mRecyclerView = findViewById(R.id.note_list_recyclerview);
         // Create an adapter and supply the data to be displayed.
-        mAdapter = new NoteListAdapter(this, mNoteTitleList, mNoteTimeList, mNoteTagList);
+        mAdapter = new NoteListAdapter(this);
         // Connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // DB parameter initialize
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        mViewModel.getAllNoteList().observe(this, new Observer<List<NoteList>>() {
+            @Override
+            public void onChanged(@Nullable final List<NoteList> noteLists) {
+                mAdapter.setNoteList(noteLists);
+
+            }
+        });
 
         // Get buttons used in delete mode
         mCancelBtn = findViewById(R.id.del_note_cancel_btn);
@@ -90,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
         // Go to LayoutSelectionActivity
         if (id == R.id.action_layout_selection) {
             Intent intent = new Intent(MainActivity.this, LayoutSelection.class);
-//                String message = mMessageEditText.getText().toString();
-//                intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
         } else if (id == R.id.action_delete_note) {
             mAdapter.enable_del_mode();
