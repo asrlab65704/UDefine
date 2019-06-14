@@ -78,6 +78,8 @@ public class ViewModel extends AndroidViewModel {
         return mRepository.getNumberOfNotes();
     }
 
+    public Notes[] getNotesFromNoteID(int id){return mRepository.getNotesFromNoteID(id);}
+
     public void deleteNote(int noteID){
         mRepository.deleteNote(noteID);
         mRepository.deleteNoteList(noteID);

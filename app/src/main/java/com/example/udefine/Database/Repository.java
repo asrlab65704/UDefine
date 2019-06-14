@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -76,6 +77,19 @@ public class Repository {
             e.printStackTrace();
         }
         return mNumberOfNotes;
+    }
+
+    public Notes [] getNotesFromNoteID(int id){
+        Notes [] notes = null;
+        try {
+            notes = new getNotesFromIDAsyncTask(mMyDao,id).execute().get();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return notes;
     }
 
 
@@ -508,6 +522,23 @@ public class Repository {
         @Override
         protected String doInBackground(Void... voids) {
             String NumberOfNotes = Integer.toString(mAsyncTaskDao.getNumberOfNotes());
+            return NumberOfNotes;
+        }
+
+    }
+
+    private static class getNotesFromIDAsyncTask extends AsyncTask<Void, Void, Notes []> {
+        private MyDao mAsyncTaskDao;
+        private int noteID;
+
+        getNotesFromIDAsyncTask(MyDao dao,int noteID) {
+            mAsyncTaskDao = dao;
+            this.noteID = noteID;
+        }
+
+        @Override
+        protected Notes [] doInBackground(Void... voids) {
+            Notes [] NumberOfNotes = mAsyncTaskDao.getNotesFromID(noteID);
             return NumberOfNotes;
         }
 
