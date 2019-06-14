@@ -183,6 +183,7 @@ public class widgetManager {
                 }
             }
             titleTimeTag.add(content);
+            content = "";
             ++counter;
         }
         return titleTimeTag;
