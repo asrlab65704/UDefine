@@ -43,7 +43,7 @@ public class EditLayout extends AppCompatActivity {
             }
         });
 
-
+        // TODO: Use layout ID to load layout data in DB
         // Add default title
         component_list.add(1);
         component_title.add("Layout Name");

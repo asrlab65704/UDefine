@@ -15,8 +15,6 @@ public class ViewModel extends AndroidViewModel {
     private LiveData<List<Layouts>> mAllLayouts;
     private LiveData<List<LayoutList>> mAllLayoutList;
 
-
-
     /*Constructor*/
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -32,7 +30,6 @@ public class ViewModel extends AndroidViewModel {
     public LiveData<List<LayoutList>> getAllLayoutList() { return mAllLayoutList; }
     public LiveData<List<Notes>> getAllNotes() { return mAllNotes; }
     public LiveData<List<Layouts>> getAllLayouts() { return mAllLayouts; }
-
 
     /*Wrapper*/
     public void insertNote(NoteList noteList,Notes notes){
