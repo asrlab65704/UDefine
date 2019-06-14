@@ -16,11 +16,6 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     public abstract MyDao myDao();
     private static MyRoomDatabase INSTANCE;
 
-
-
-
-
-
     // This callback is called when the database has opened.
     // In this case, use PopulateDbAsync to populate the database
     // with the initial data set if the database has no entries.
@@ -51,7 +46,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             // If we have no words, then create the initial list of words
-            if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
+            //if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
                 Log.d("TestMsg","Initiallize default data...");
 
                 /**創建預設LayoutList**/
@@ -82,7 +77,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                     mDao.insertNote(DefaultNotes);
                 }
                 Log.d("TestMsg","Initiallize default data success.");
-            }
+            //}
             return null;
         }
     }

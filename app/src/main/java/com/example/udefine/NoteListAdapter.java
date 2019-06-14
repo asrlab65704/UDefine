@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.udefine.Database.NoteList;
+import com.example.udefine.Database.Notes;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,9 +45,6 @@ public class NoteListAdapter extends
     public NoteListAdapter(Context context) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
-
-        // TODO: This is testing data, should be replace later.
-
 
         // fill delete_note with false
         Arrays.fill(delete_note, Boolean.FALSE);
@@ -132,6 +131,17 @@ public class NoteListAdapter extends
     public boolean get_del_mode() { return del_flag; }
     public void enable_del_mode() { del_flag = true; }
     public void disable_del_mode() { del_flag = false; }
+
+    public ArrayList<Integer> get_del_note_id()
+    {
+        ArrayList<Integer> note_id_del_list = new ArrayList<>();
+
+        for (int i = 0; i < mNoteList.size(); i++) {
+            if (delete_note[i])
+                note_id_del_list.add(mNoteList.get(i).getNoteID());
+        }
+        return note_id_del_list;
+    }
 
     public void reset_note_list()
     {

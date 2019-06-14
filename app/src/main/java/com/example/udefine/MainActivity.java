@@ -21,6 +21,7 @@ import com.example.udefine.Database.NoteList;
 import com.example.udefine.Database.Notes;
 import com.example.udefine.Database.ViewModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<NoteList> noteLists) {
                 mAdapter.setNoteList(noteLists);
-
             }
         });
 
@@ -122,12 +122,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void del_note_del(View view)
     {
+        ArrayList<Integer> note_id_del_list = mAdapter.get_del_note_id();
+
         // hidden btn
         mCancelBtn.setVisibility(View.INVISIBLE);
         mDeleteBtn.setVisibility(View.INVISIBLE);
 
         // delete note
-        mAdapter.del_note();
+        if (note_id_del_list != null)
+            for (int i = 0; i < note_id_del_list.size(); i++) {
+                mViewModel.deleteNote(note_id_del_list.get(i));
+            }
         mAdapter.disable_del_mode();
         mAdapter.reset_note_list();
     }

@@ -40,7 +40,7 @@ public class LayoutSelection extends AppCompatActivity {
             }
         });
 
-        // TODO: Testing data. Put initial data into the word list.
+        // TODO: DB
         for (int i = 0; i < 20; i++) {
             mLayoutList.addLast("Layout: " + i);
         }
@@ -57,8 +57,6 @@ public class LayoutSelection extends AppCompatActivity {
 
     public void edit_layout(View view) {
         Intent intent = new Intent(LayoutSelection.this, EditLayout.class);
-//                String message = mMessageEditText.getText().toString();
-//                intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 }
