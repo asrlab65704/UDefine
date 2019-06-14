@@ -49,13 +49,6 @@ public class NewNote extends AppCompatActivity {
         //mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
 
         // TODO: grab layout component ID from DB
-        /*
-         *  widget type:
-         *  1. Title + editText
-         *  2. Title + Date/Time Picker
-         *  3. Title + Tag
-         *  4. Title + PlainText
-         */
         // component_list should be a layout class with title name
         int component_list[] = {1, 2, 3, 4, 2, 3};
         String component_title[] = {"?", "??", "???", "", "????", "?????"};

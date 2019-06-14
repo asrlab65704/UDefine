@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.udefine.Database.Layouts;
 import com.example.udefine.Database.Notes;
 
 import java.util.ArrayList;
@@ -29,6 +30,14 @@ public class widgetManager {
 
     /* A hash map record View id and title */
     private HashMap<Integer, String> title_id_list;
+
+    /*
+     *  widget type:
+     *  1. editText (single line)
+     *  2. date/time picker
+     *  3. tag
+     *  4. plainText (multiple line)
+     */
 
     public widgetManager(Context context, LinearLayout parent,
                            FragmentManager fragment) {
@@ -240,6 +249,48 @@ public class widgetManager {
             content = "";
         }
         return notes;
+    }
+
+    public ArrayList<Layouts> getLayoutContent(int LayoutID) {
+
+        int id, format = 0;
+        String title;
+        ArrayList<Layouts> layouts = new ArrayList<>();
+        Iterator<HashMap.Entry<Integer, String>> iterator =
+                title_id_list.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            // get Title and View
+            HashMap.Entry<Integer, String> entry = iterator.next();
+            id = entry.getKey();
+            title = entry.getValue();
+            View v = parentLinearLayout.findViewById(id);
+
+            if (v instanceof EditText) {
+                EditText e = (EditText)v;
+
+                if((e.getInputType() & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0) {
+                    // multiple line textview
+                    format = 4;
+                } else {
+                    // single line textview
+                    format = 1;
+                }
+            } else if (v instanceof Button) {
+                // date/time picker
+                format = 2;
+            } else if (v instanceof Spinner) {
+                // tag
+                format = 3;
+            } else {
+                Log.w("widgetManager", "Something wrong in getLayoutContent()",null);
+            }
+
+            // Add Layouts object to list
+            Layouts n = new Layouts(LayoutID, title, format);
+            layouts.add(n);
+        }
+        return layouts;
     }
 
     public void addEditText(String title) {

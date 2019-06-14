@@ -23,8 +23,11 @@
     <!--textview string-->
     <string name="title_element_title">Element Title Name</string>
     <string name="element_title_hint">title name</string>
+    <string name="layout_name_title">Layout Name</string>
+    <string name="layout_name_hint">Layout No.1</string>
     <string name="widget_type_selection">Select Wedgit</string>
     <string name="title_element_preview">Element Preview</string>
+
 
     <!--spinner element-->
     <string-array name="widget_type_spinner">

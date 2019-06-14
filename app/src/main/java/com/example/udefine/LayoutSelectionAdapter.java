@@ -88,7 +88,6 @@ public class LayoutSelectionAdapter extends
     // delete layout function
     public int get_del_layout_id() {
         if (getItemCount() != 0) {
-            Toast.makeText(context, Integer.toString(lastSelectedPosition), Toast.LENGTH_LONG).show();
             return mLayoutList.get(lastSelectedPosition).getLayoutID();
         } else {
             return -1;

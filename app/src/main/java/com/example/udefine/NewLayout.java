@@ -1,5 +1,6 @@
 package com.example.udefine;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,19 +8,27 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.udefine.Database.LayoutList;
+import com.example.udefine.Database.Layouts;
+import com.example.udefine.Database.ViewModel;
 
 import java.util.ArrayList;
 
 public class NewLayout extends AppCompatActivity {
     private widgetManager widgetsManager;
     private LinearLayout parentLinear;
+    private EditText mNewLayoutName;
     private ArrayList<Integer> component_list = new ArrayList<Integer>();
     private ArrayList<String> component_title = new ArrayList<String>();
     public static final String component_list_passing_key = "COMPONENT_LIST_KEY";
     public static final String component_title_passing_key = "COMPONENT_TITLE_KEY";
     public static final int TEXT_REQUEST = 1;
+
+    private ViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,9 @@ public class NewLayout extends AppCompatActivity {
             }
         });
 
+        mNewLayoutName = findViewById(R.id.new_layout_name);
 
         // Add default title
-        component_list.add(1);
-        component_title.add("Layout Name");
         component_list.add(1);
         component_title.add("Title");
 
@@ -55,6 +63,8 @@ public class NewLayout extends AppCompatActivity {
                 getSupportFragmentManager());
         widgetsManager.generate(component_list, component_title);
 
+        // DB data initial
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
     }
 
     @Override
@@ -72,13 +82,19 @@ public class NewLayout extends AppCompatActivity {
     }
 
     public void saveLayout(View view) {
-        // TODO: save layout to db
+        // save LayoutList into DB
+        LayoutList new_layoutlist = new LayoutList(mNewLayoutName.getText().toString());
+        mViewModel.inserLayoutList(new_layoutlist);
+
+        // save Layouts into DB
+        ArrayList<Layouts> new_layouts = widgetsManager.getLayoutContent(new_layoutlist.getLayoutID());
+        mViewModel.insertLayouts(new_layouts);
         finish();
     }
 
     public void deleteLayoutElement(View view) {
         // delete the last layout
-        if (component_list.size() > 2) {
+        if (component_list.size() > 1) {
             parentLinear.removeViewAt(component_list.size() - 1);
             // Remove deleted widget
             component_list.remove(component_list.size() - 1);
