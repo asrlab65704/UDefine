@@ -46,7 +46,7 @@ public class NewNote extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Create ViewModel instance
-        //mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
 
         // TODO: grab layout component ID from DB
         // component_list should be a layout class with title name
@@ -86,12 +86,12 @@ public class NewNote extends AppCompatActivity {
         String tag = titleTimeTag.get(2) == null ? null:
                 titleTimeTag.get(2);
 
-        //mNoteList = new NoteList(noteTitle, time, tag, layoutID);
-        //mViewModel.insertNoteList(mNoteList);
+        mNoteList = new NoteList(noteTitle, time, tag, layoutID);
+        mViewModel.insertNoteList(mNoteList);
 
         // Insert to note title/content table
-        //ArrayList<Notes> noteColumns = widgetsManager.getNoteContent(mViewModel.getLastNoteID());
-        //mViewModel.insertNotes(noteColumns);
+        ArrayList<Notes> noteColumns = widgetsManager.getNoteContent(mViewModel.getLastNoteID());
+        mViewModel.insertNotes(noteColumns);
 
         finish();
     }
