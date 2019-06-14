@@ -11,25 +11,27 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.udefine.Database.LayoutList;
+import com.example.udefine.Database.NoteList;
+
 import java.util.LinkedList;
+import java.util.List;
 
 public class LayoutSelectionAdapter extends
         RecyclerView.Adapter<LayoutSelectionAdapter.LayoutSelectionHolder> {
 
     // TODO: This is testing data, should be replace later.
-    private final LinkedList<String> mLayoutList;
+    private List<LayoutList> mLayoutList;
 
     private LayoutInflater mInflater;
+    private Context context;
 
     // Use for single selection checked
     private int lastSelectedPosition = -1;
 
-    public LayoutSelectionAdapter(Context context,
-                           LinkedList<String> LayoutList) {
+    public LayoutSelectionAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
-
-        // TODO: This is testing data, should be replace later.
-        this.mLayoutList = LayoutList;
+        this.context = context;
     }
 
     @Override
@@ -38,12 +40,10 @@ public class LayoutSelectionAdapter extends
         return new LayoutSelectionHolder(mItemView, this);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull LayoutSelectionHolder noteListHolder, int position) {
 
-        // TODO: This is testing data, should be replace later.
-        String mTitleCurrent = mLayoutList.get(position);
+        String mTitleCurrent = mLayoutList.get(position).getLayoutName();
         noteListHolder.LayoutView.setText(mTitleCurrent);
 
         //since only one radio button is allowed to be selected,
@@ -51,10 +51,12 @@ public class LayoutSelectionAdapter extends
         noteListHolder.LayoutView.setChecked(lastSelectedPosition == position);
     }
 
-    // TODO: This is testing data, should be replace later.
     @Override
     public int getItemCount() {
-        return mLayoutList.size();
+        if (mLayoutList != null)
+            return mLayoutList.size();
+        else
+            return 0;
     }
 
     class LayoutSelectionHolder extends RecyclerView.ViewHolder {
@@ -77,6 +79,21 @@ public class LayoutSelectionAdapter extends
         }
     }
 
+    // function for DB control
+    public void setLayoutList(List<LayoutList> layoutLists) {
+        this.mLayoutList = layoutLists;
+        notifyDataSetChanged();
+    }
+
+    // delete layout function
+    public int get_del_layout_id() {
+        if (getItemCount() != 0) {
+            Toast.makeText(context, Integer.toString(lastSelectedPosition), Toast.LENGTH_LONG).show();
+            return mLayoutList.get(lastSelectedPosition).getLayoutID();
+        } else {
+            return -1;
+        }
+    }
 }
 
 
