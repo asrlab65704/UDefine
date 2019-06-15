@@ -101,6 +101,18 @@ public class Repository {
         return notes;
     }
 
+    public Layouts[] getLayoutsFromLayoutID(int id){
+        Layouts [] layouts =null;
+        try {
+            layouts = new getLayoutsFromLayoutIDAsyncTask(mMyDao,id).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return layouts;
+    }
+
 
 
     //----------新增---------//
@@ -601,6 +613,25 @@ public class Repository {
         protected Notes [] doInBackground(Void... voids) {
             Notes [] NumberOfNotes = mAsyncTaskDao.getNotesFromID(noteID);
             return NumberOfNotes;
+        }
+
+    }
+
+
+
+    private static class getLayoutsFromLayoutIDAsyncTask extends AsyncTask<Void, Void, Layouts []> {
+        private MyDao mAsyncTaskDao;
+        private int noteID;
+
+        getLayoutsFromLayoutIDAsyncTask(MyDao dao,int noteID) {
+            mAsyncTaskDao = dao;
+            this.noteID = noteID;
+        }
+
+        @Override
+        protected Layouts [] doInBackground(Void... voids) {
+            Layouts [] layouts = mAsyncTaskDao.getLayoutsFromLayoutID(noteID);
+            return layouts;
         }
 
     }
