@@ -79,6 +79,17 @@ public class LayoutSelectionAdapter extends
         }
     }
 
+    // function for default selection
+    public void setDefaultSelection(int layout_id)
+    {
+        for (int i = 0; i < mLayoutList.size(); i++) {
+            if (mLayoutList.get(i).getLayoutID() == layout_id) {
+                lastSelectedPosition = i;
+                break;
+            }
+        }
+    }
+
     // function for DB control
     public void setLayoutList(List<LayoutList> layoutLists)
     {
