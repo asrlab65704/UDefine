@@ -64,13 +64,14 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                 }
 
                 /**創建預設NoteList**/
-                NoteList DefaultNoteList = new NoteList("幫App評分", "2019/5/26,09:30", "#123456,#123749", DefaultLayoutID);
+                NoteList DefaultNoteList = new NoteList("幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", DefaultLayoutID);
                 mDao.insertNotelist(DefaultNoteList);
 
                 /**創建預設Notes**/
                 int DefaultNoteID = mDao.getLastNoteListID();
                 String[] DefaultTitle={"標題", "時間", "Tag", "備註"};
-                String[] DefaultContent={"幫App評分", "2019/5/26,09:30", "#123456,#123749", "喜歡的話去Store按個5星QQ"};
+                String[] DefaultContent={"幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", "喜歡的話去Store按個5星QQ"};
+
                 for(int i=0; i< DefaultTitle.length; i++)
                 {
                     Notes DefaultNotes = new Notes(DefaultNoteID, DefaultTitle[i], DefaultContent[i]);

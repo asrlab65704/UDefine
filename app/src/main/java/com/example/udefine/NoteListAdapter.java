@@ -65,9 +65,25 @@ public class NoteListAdapter extends
         String mTimeCurrent = mNoteList.get(position).getTime();
         String mTagCurrent = mNoteList.get(position).getTag();
 
+        String[] mTagCut = mTagCurrent.split(",");
+
         noteListHolder.NoteTitleView.setText(mTitleCurrent);
         noteListHolder.NoteTimeView.setText(mTimeCurrent);
-        noteListHolder.NoteTagView.setText(mTagCurrent);
+        noteListHolder.TagItemView.removeAllViews();
+
+        /* element layout setting */
+        LinearLayout.LayoutParams tagLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        tagLayoutParams.width = 100;
+        tagLayoutParams.height = 20;
+        tagLayoutParams.setMargins(32, 16, 0, 16);
+        /* View */
+        for (int i = 0; i < mTagCut.length; i++) {
+            TextView tagView = new TextView(context);
+            tagView.setBackgroundColor(Color.parseColor(mTagCut[i]));
+            noteListHolder.TagItemView.addView(tagView, tagLayoutParams);
+        }
 
         if (delete_note[position]) {
             noteListHolder.NoteItemView.setBackground(
@@ -91,16 +107,16 @@ public class NoteListAdapter extends
     class NoteListHolder extends RecyclerView.ViewHolder {
         public final TextView NoteTitleView;
         public final TextView NoteTimeView;
-        public final TextView NoteTagView;
         public final LinearLayout NoteItemView;
+        public final LinearLayout TagItemView;
         final NoteListAdapter mAdapter;
 
         public NoteListHolder(View itemView, NoteListAdapter adapter) {
             super(itemView);
             NoteTitleView = itemView.findViewById(R.id.note_title);
             NoteTimeView = itemView.findViewById(R.id.note_time);
-            NoteTagView = itemView.findViewById(R.id.note_tag);
             NoteItemView = itemView.findViewById(R.id.note_item);
+            TagItemView = itemView.findViewById(R.id.tag_linear);
             this.mAdapter = adapter;
 
             NoteItemView.setOnClickListener(new View.OnClickListener() {
