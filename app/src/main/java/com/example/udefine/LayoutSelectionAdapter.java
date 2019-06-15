@@ -90,6 +90,9 @@ public class LayoutSelectionAdapter extends
         }
     }
 
+    // function for default layout hint
+    public String setDefaultHint() { return mLayoutList.get(lastSelectedPosition).getLayoutName(); }
+
     // function for DB control
     public void setLayoutList(List<LayoutList> layoutLists)
     {

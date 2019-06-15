@@ -113,5 +113,7 @@ public class LayoutSelection extends AppCompatActivity {
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.putInt(LAYOUT_ID, mAdapter.getSelectedLayoutID());
         preferencesEditor.apply();
+        Toast.makeText(getApplicationContext(), "Set " + mAdapter.setDefaultHint()
+                + " as default layout.", Toast.LENGTH_LONG).show();
     }
 }
