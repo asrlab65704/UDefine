@@ -86,12 +86,10 @@ public class NewLayout extends AppCompatActivity {
     public void saveLayout(View view) {
         // save LayoutList into DB
         LayoutList new_layoutlist = new LayoutList(mNewLayoutName.getText().toString());
-        new_layoutlist.setLayoutID(mViewModel.getLastLayoutID() + 1);
         mViewModel.inserLayoutList(new_layoutlist);
 
-        Toast.makeText(getApplicationContext(), Integer.toString(new_layoutlist.getLayoutID()), Toast.LENGTH_LONG).show();
         // save Layouts into DB
-        ArrayList<Layouts> new_layouts = widgetsManager.getLayoutContent(new_layoutlist.getLayoutID());
+        ArrayList<Layouts> new_layouts = widgetsManager.getLayoutContent(mViewModel.getLastLayoutID());
         mViewModel.insertLayouts(new_layouts);
         finish();
     }
