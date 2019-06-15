@@ -3,6 +3,7 @@ package com.example.udefine;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     // DB data
     private ViewModel mViewModel;
 
+    // shared preference
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "Udefine.sharedPrefs";
+    private final String LAYOUT_ID = "Layout_ID";
+
     private RecyclerView mRecyclerView;
     private NoteListAdapter mAdapter;
     private Button mCancelBtn;
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // shared preference
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         // Default toolbar setting
         Toolbar toolbar = findViewById(R.id.main_toolbar);

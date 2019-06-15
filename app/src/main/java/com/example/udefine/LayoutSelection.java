@@ -3,6 +3,7 @@ package com.example.udefine;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,12 @@ import java.util.List;
 public class LayoutSelection extends AppCompatActivity {
 
     public static final String layout_id_key = "LAYOUT_ID_KEY";
+
+    // shared preference
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "Udefine.sharedPrefs";
+    private final String LAYOUT_ID = "Layout_ID";
+    private int layout_id;
 
     // TODO:DB data
     private ViewModel mViewModel;
@@ -55,6 +62,9 @@ public class LayoutSelection extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<LayoutList> layoutLists) {
                 mAdapter.setLayoutList(layoutLists);
+
+                // set default layout
+                mAdapter.setDefaultSelection(layout_id);
             }
         });
 
@@ -66,6 +76,10 @@ public class LayoutSelection extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // shared preference
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        layout_id = mPreferences.getInt(LAYOUT_ID, 0);
     }
 
     @Override
@@ -91,5 +105,12 @@ public class LayoutSelection extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "No layout can be deleted.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void default_layout(View view)
+    {
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(LAYOUT_ID, mAdapter.getSelectedLayoutID());
+        preferencesEditor.apply();
     }
 }

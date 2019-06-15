@@ -64,6 +64,7 @@
             android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:background="@drawable/button_layout"
-            android:text="@string/default_button" />
+            android:text="@string/default_button"
+            android:onClick="default_layout"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

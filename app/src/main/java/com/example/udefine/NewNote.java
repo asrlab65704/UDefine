@@ -2,6 +2,7 @@ package com.example.udefine;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.udefine.Database.LayoutList;
+import com.example.udefine.Database.Layouts;
 import com.example.udefine.Database.NoteList;
 import com.example.udefine.Database.Notes;
 import com.example.udefine.Database.ViewModel;
@@ -33,9 +35,16 @@ import java.util.Map;
 public class NewNote extends AppCompatActivity {
     private widgetManager widgetsManager;
     private ViewModel mViewModel;
-    private LayoutList mLayoutList;
     private NoteList mNoteList;
-    private Notes mNotes;
+    private ArrayList<Integer> component_list = new ArrayList<Integer>();
+    private ArrayList<String> component_title = new ArrayList<String>();
+
+    // parameter for initial
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "Udefine.sharedPrefs";
+    private final String LAYOUT_ID = "Layout_ID";
+    private int layout_id;
+    private Layouts[] init_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +54,22 @@ public class NewNote extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // shared preference
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        layout_id = mPreferences.getInt(LAYOUT_ID, 0);
+
         // Create ViewModel instance
         mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
 
         // TODO: grab layout component ID from DB
-        // component_list should be a layout class with title name
-        int component_list[] = {1, 2, 3, 4, 2, 3};
-        String component_title[] = {"?", "??", "???", "", "????", "?????"};
+        init_layout = mViewModel.getLayoutsFromLayoutID(layout_id);
+
+        // extract data from init_layout and insert into component_list
+        for (int i = 0; i < init_layout.length; i++) {
+            component_title.add(init_layout[i].getLayoutName());
+            component_list.add(init_layout[i].getFormat());
+        }
+
         LinearLayout parentLinear = findViewById(R.id.newNoteLayout);
         widgetsManager = new widgetManager(this, parentLinear,
                                                          getSupportFragmentManager());
@@ -74,8 +92,7 @@ public class NewNote extends AppCompatActivity {
     }
 
     public void saveNote(View view) {
-        // TODO: Get layout ID from Main Activity
-        int layoutID = 1;
+        layout_id = mPreferences.getInt(LAYOUT_ID, 0);
 
         // Get time, time, tag
         ArrayList<String> titleTimeTag = widgetsManager.getNoteTitleTimeTag();
@@ -86,7 +103,7 @@ public class NewNote extends AppCompatActivity {
         String tag = titleTimeTag.get(2) == null ? null:
                 titleTimeTag.get(2);
 
-        mNoteList = new NoteList(noteTitle, time, tag, layoutID);
+        mNoteList = new NoteList(noteTitle, time, tag, layout_id);
         mViewModel.insertNoteList(mNoteList);
 
         // Insert to note title/content table
