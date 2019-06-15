@@ -122,6 +122,10 @@ public class Repository {
         new updateNoteAsyncTask(mMyDao).execute(notes);
     }
 
+    public void updateLayouts(Layouts layouts){
+        new updateLayoutsAsyncTask(mMyDao).execute(layouts);
+    }
+
     public void updateNoteListLayout(int layoutID, int noteID) {
         int[] IDs = new int[2];
         IDs[0] = layoutID;
@@ -134,6 +138,10 @@ public class Repository {
         obj[0] = noteID;
         obj[1] = title;
         new updateNoteListTitleAsyncTask(mMyDao).execute(obj);
+    }
+
+    public void updateLayoutList(LayoutList layoutList){
+        new updateLayoutListAsyncTask(mMyDao).execute(layoutList);
     }
 
     //----------刪除---------//
@@ -322,6 +330,35 @@ public class Repository {
             int NoteID = Integer.parseInt(params[0][0].toString());
             String Title = params[0][1].toString();
             mAsyncTaskDao.updateNoteListTitle(NoteID, Title);
+            return null;
+        }
+    }
+
+
+    private static class updateLayoutListAsyncTask extends AsyncTask<LayoutList, Void, Void> {
+        private MyDao mAsyncTaskDao;
+
+        updateLayoutListAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final LayoutList... params) {
+            mAsyncTaskDao.updateLayoutList(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateLayoutsAsyncTask extends AsyncTask<Layouts, Void, Void> {
+        private MyDao mAsyncTaskDao;
+
+        updateLayoutsAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Layouts... params) {
+            mAsyncTaskDao.updateLayouts(params[0]);
             return null;
         }
     }

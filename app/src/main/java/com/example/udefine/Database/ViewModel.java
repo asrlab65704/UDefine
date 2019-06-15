@@ -100,4 +100,12 @@ public class ViewModel extends AndroidViewModel {
         mRepository.updateNoteList(noteList);
     }
 
+    public void updateLayoutList(LayoutList layoutList){mRepository.updateLayoutList(layoutList);}
+
+    public void updateLayouts(ArrayList<Layouts> layouts){
+        for(Layouts layout:layouts){
+            mRepository.updateLayouts(layout);
+        }
+    }
+
 }

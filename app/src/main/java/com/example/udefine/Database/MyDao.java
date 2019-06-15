@@ -132,4 +132,11 @@ public interface MyDao {
     @Query("SELECT * from NoteList LIMIT 1")
     NoteList[] getAnyNoteList();
 
+
+    @Update
+    void updateLayoutList(LayoutList layoutList);
+
+    @Update
+    void updateLayouts(Layouts layouts);
+
 }
