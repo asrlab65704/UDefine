@@ -94,6 +94,12 @@ public class ViewModel extends AndroidViewModel {
     {
         mRepository.updateNote(notes);
     }
+    public void updateNote(ArrayList<Notes> notes)
+    {
+        for(Notes note:notes){
+            mRepository.updateNote(note);
+        }
+    }
 
     public void updateNoteList(NoteList noteList)
     {
