@@ -79,6 +79,7 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public Notes[] getNotesFromNoteID(int id){return mRepository.getNotesFromNoteID(id);}
+    public Layouts[] getLayoutsFromLayoutID(int id){return mRepository.getLayoutsFromLayoutID(id);}
     public int getLayoutIDFromNoteID(int id){return mRepository.getLayoutIDFromNoteID(id);}
 
     public void deleteNote(int noteID){

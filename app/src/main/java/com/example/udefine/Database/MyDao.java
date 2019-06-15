@@ -61,6 +61,8 @@ public interface MyDao {
 
     @Query("select LayoutID from NoteList where NoteID = :noteID")
     int getLayoutIDFromNoteID(int noteID);
+    @Query("select * from Layouts where LayoutID = :layoutID")
+    Layouts[] getLayoutsFromLayoutID (int layoutID);
 
     @Query("select count(1) from NoteList")
     int getNumberOfNotes();
