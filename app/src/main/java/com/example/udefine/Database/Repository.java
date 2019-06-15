@@ -28,7 +28,16 @@ public class Repository {
     }
 
     public int getLayoutIDFromNoteID(int noteID){
-        return mMyDao.getLayoutIDFromNoteID(noteID);
+
+        int layoutID=0;
+        try {
+            layoutID=Integer.parseInt(new getLayoutIDFromNoteIDAsyncTask(mMyDao).execute().get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return layoutID;
     }
 
     LiveData<List<NoteList>> getAllNoteList() { return mNoteList; }
@@ -530,6 +539,21 @@ public class Repository {
         protected String doInBackground(Void... voids) {
             String LastNoteID = Integer.toString(mAsyncTaskDao.getLastNoteID());
             return LastNoteID;
+        }
+
+    }
+
+    private static class getLayoutIDFromNoteIDAsyncTask extends AsyncTask<int[], Void, String> {
+        private MyDao mAsyncTaskDao;
+
+        getLayoutIDFromNoteIDAsyncTask(MyDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected String doInBackground(final int[]... params) {
+            String layoutID = Integer.toString(mAsyncTaskDao.getLayoutIDFromNoteID(params[0][0]));
+            return layoutID;
         }
 
     }
