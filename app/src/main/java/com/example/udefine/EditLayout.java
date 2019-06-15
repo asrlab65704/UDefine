@@ -96,8 +96,8 @@ public class EditLayout extends AppCompatActivity {
     public void saveLayout(View view) {
         // save Layouts into DB
         if (layout_id != -1) {
-            ArrayList<Layouts> new_layouts = widgetsManager.getLayoutContent(layout_id);
-            mViewModel.updateLayouts(new_layouts);
+            ArrayList<Layouts> edit_layouts = widgetsManager.getLayoutContent(layout_id);
+            mViewModel.editLayout(layout_id, edit_layouts);
         } else {
             Log.w("EditLayout", "something wrong in save Layout.", null);
         }
@@ -107,11 +107,12 @@ public class EditLayout extends AppCompatActivity {
     public void deleteLayoutElement(View view) {
         // delete the last layout
         if (component_list.size() > 1) {
-            widgetsManager.removeLastHashmap();
-            parentLinear.removeViewAt(component_list.size() - 1);
             // Remove deleted widget
             component_list.remove(component_list.size() - 1);
             component_title.remove(component_title.size() - 1);
+            widgetsManager.removeAllHashmap();
+            parentLinear.removeAllViews();
+            widgetsManager.generate(component_list, component_title);
         } else {
             String warning_msg = "You can not remove Title";
             Toast warning = Toast.makeText(EditLayout.this,
