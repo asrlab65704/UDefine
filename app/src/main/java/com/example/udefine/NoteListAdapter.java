@@ -148,19 +148,4 @@ public class NoteListAdapter extends
         Arrays.fill(delete_note, Boolean.FALSE);
         notifyDataSetChanged();
     }
-
-    public void del_note()
-    {
-        int note_num = getItemCount();
-        int del_num = 0;
-        for (int i = 0; i < note_num; i++) {
-            if (delete_note[i]) {
-//                mNoteTitleList.remove(i - del_num);
-//                mNoteTimeList.remove(i - del_num);
-//                mNoteTagList.remove(i - del_num);
-                del_num++;
-            }
-        }
-        notifyDataSetChanged();
-    }
 }
