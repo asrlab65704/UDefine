@@ -92,6 +92,13 @@ public class ViewModel extends AndroidViewModel {
         mRepository.deleteLayout(layoutID);
     }
 
+    public void editLayout(int layoutID,ArrayList<Layouts> layouts){
+        mRepository.deleteLayout(layoutID);
+        for(Layouts layout:layouts){
+            mRepository.insertLayouts(layout);
+        }
+    }
+
     public void updateNote(Notes notes)
     {
         mRepository.updateNote(notes);
