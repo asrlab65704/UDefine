@@ -56,7 +56,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                 /**創建預設Layout**/
                 int DefaultLayoutID = mDao.getLastLayoutListID();
                 String[] DefaultLayoutName={"標題", "時間", "Tag", "備註"};
-                int[] format = {0, 1, 2, 3};
+                int[] format = {1, 2, 3, 4};
                 for(int i=0; i< DefaultLayoutName.length; i++)
                 {
                     Layouts DefaultLayouts = new Layouts(DefaultLayoutID,DefaultLayoutName[i],format[i]);
