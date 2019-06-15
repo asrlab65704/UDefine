@@ -129,6 +129,11 @@ public class widgetManager {
         }
     }
 
+    public void removeAllHashmap() { title_id_list.clear(); }
+    public void removeLastHashmap() {
+        title_id_list.remove(title_id_list.size() - 1);
+    }
+
     public ArrayList<String> getNoteTitleTimeTag() {
         int id, counter = 0;
         String content = "";
@@ -252,6 +257,7 @@ public class widgetManager {
         return notes;
     }
 
+    // get Layout content by Layout ID
     public ArrayList<Layouts> getLayoutContent(int LayoutID) {
 
         int id, format = 0;
@@ -259,6 +265,7 @@ public class widgetManager {
         ArrayList<Layouts> layouts = new ArrayList<>();
         Iterator<HashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
+        boolean time_button_repeat = false;
 
         while (iterator.hasNext()) {
             // get Title and View
@@ -278,8 +285,14 @@ public class widgetManager {
                     format = 1;
                 }
             } else if (v instanceof Button) {
-                // date/time picker
-                format = 2;
+                // date/time picker has two button, this may cause repeat count.
+                if (!time_button_repeat) {
+                    format = 2;
+                    time_button_repeat = !time_button_repeat;
+                } else {
+                    time_button_repeat = !time_button_repeat;
+                    continue;
+                }
             } else if (v instanceof Spinner) {
                 // tag
                 format = 3;

@@ -23,6 +23,8 @@ import java.util.List;
 
 public class LayoutSelection extends AppCompatActivity {
 
+    public static final String layout_id_key = "LAYOUT_ID_KEY";
+
     // TODO:DB data
     private ViewModel mViewModel;
 
@@ -66,15 +68,23 @@ public class LayoutSelection extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    @Override
+    public void onActivityResult(int requestCode,
+                                 int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        mAdapter.notifyDataSetChanged();
+    }
+
     public void edit_layout(View view)
     {
         Intent intent = new Intent(LayoutSelection.this, EditLayout.class);
+        intent.putExtra(layout_id_key, mAdapter.getSelectedLayoutID());
         startActivity(intent);
     }
 
     public void del_layout(View view)
     {
-        int del_layout_id = mAdapter.get_del_layout_id();
+        int del_layout_id = mAdapter.getSelectedLayoutID();
         if (del_layout_id != -1) {
             mViewModel.deleteLayout(del_layout_id);
             mAdapter.notifyDataSetChanged();

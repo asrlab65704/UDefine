@@ -80,19 +80,24 @@ public class LayoutSelectionAdapter extends
     }
 
     // function for DB control
-    public void setLayoutList(List<LayoutList> layoutLists) {
+    public void setLayoutList(List<LayoutList> layoutLists)
+    {
         this.mLayoutList = layoutLists;
         notifyDataSetChanged();
     }
 
-    // delete layout function
-    public int get_del_layout_id() {
+    // return Selected LayoutID
+    public int getSelectedLayoutID()
+    {
         if (getItemCount() != 0) {
             return mLayoutList.get(lastSelectedPosition).getLayoutID();
         } else {
             return -1;
         }
     }
+
+    // return lastSelectedPosition
+    public int getSelectedPosition() { return lastSelectedPosition; }
 }
 
 
