@@ -93,6 +93,7 @@ public class LayoutSelection extends AppCompatActivity {
     {
         Intent intent = new Intent(LayoutSelection.this, EditLayout.class);
         intent.putExtra(layout_id_key, mAdapter.getSelectedLayoutID());
+        Toast.makeText(getApplicationContext(), Integer.toString(mAdapter.getSelectedLayoutID()), Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
 
