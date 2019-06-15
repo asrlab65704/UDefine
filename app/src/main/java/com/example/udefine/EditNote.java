@@ -1,5 +1,6 @@
 package com.example.udefine;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,11 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.udefine.Database.Notes;
+import com.example.udefine.Database.ViewModel;
+
 public class EditNote extends AppCompatActivity {
     // from EditNote intent
     public static final String EDIT_NOTE_ID =
             "com.example.android.udefine.extra.EDITNOTEID";
     private widgetManager widgetsManager;
+    private ViewModel mViewModel;
+    private int noteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +32,7 @@ public class EditNote extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        int noteId = intent.getIntExtra(EDIT_NOTE_ID, 0);
+        noteId = intent.getIntExtra(EDIT_NOTE_ID, 0);
         Log.d("editnote", Integer.toString(noteId));
         // TODO: grab layout component ID and title, content value from DB
         /*
@@ -43,6 +49,12 @@ public class EditNote extends AppCompatActivity {
         widgetsManager = new widgetManager(this, parentLinear,
                 getSupportFragmentManager());
         widgetsManager.generate(component_list, component_title);
+
+
+        mViewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        Notes[] notes = mViewModel.getNotesFromNoteID(noteId);
+
+        //TODO: 把取得的notes值,塞到layout裡面
     }
 
     @Override
@@ -63,6 +75,10 @@ public class EditNote extends AppCompatActivity {
     public void saveNote(View view) {
         //widgetsManager.getNoteContent();
         // TODO: update to DB
+        //取得更新後的NoteList
+//        mViewModel.updateNoteList();
+        //取得更新後的ArrayList<Notes>
+//        mViewModel.updateNote();
         finish();
     }
 
@@ -72,6 +88,7 @@ public class EditNote extends AppCompatActivity {
 
     public void deleteNote(View view) {
         // TODO: delete from DB
+        mViewModel.deleteNote(noteId);
         finish();
     }
 }
