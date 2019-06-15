@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -73,6 +74,7 @@ public class NewLayout extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == TEXT_REQUEST) {
             if (resultCode == RESULT_OK) {
+                widgetsManager.removeAllHashmap();
                 parentLinear.removeAllViews();
                 component_list = intent.getIntegerArrayListExtra(component_list_passing_key);
                 component_title = intent.getStringArrayListExtra(component_title_passing_key);
@@ -84,8 +86,10 @@ public class NewLayout extends AppCompatActivity {
     public void saveLayout(View view) {
         // save LayoutList into DB
         LayoutList new_layoutlist = new LayoutList(mNewLayoutName.getText().toString());
+        new_layoutlist.setLayoutID(mViewModel.getLastLayoutID() + 1);
         mViewModel.inserLayoutList(new_layoutlist);
 
+        Toast.makeText(getApplicationContext(), Integer.toString(new_layoutlist.getLayoutID()), Toast.LENGTH_LONG).show();
         // save Layouts into DB
         ArrayList<Layouts> new_layouts = widgetsManager.getLayoutContent(new_layoutlist.getLayoutID());
         mViewModel.insertLayouts(new_layouts);
@@ -95,10 +99,12 @@ public class NewLayout extends AppCompatActivity {
     public void deleteLayoutElement(View view) {
         // delete the last layout
         if (component_list.size() > 1) {
-            parentLinear.removeViewAt(component_list.size() - 1);
             // Remove deleted widget
             component_list.remove(component_list.size() - 1);
             component_title.remove(component_title.size() - 1);
+            widgetsManager.removeAllHashmap();
+            parentLinear.removeAllViews();
+            widgetsManager.generate(component_list, component_title);
         } else {
             String warning_msg = "You can not remove Title";
             Toast warning = Toast.makeText(NewLayout.this,
