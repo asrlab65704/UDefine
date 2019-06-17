@@ -155,7 +155,7 @@ public class widgetManager {
                     e.setText(content);
                 } else if (v instanceof Button) {
                     Button b = (Button) v;
-                    if (content != null) {
+                    if (content.length() > 0) {
                         String dateTime[] = content.split(",");
                         // set date
                         b.setText(dateTime[0]);
@@ -177,17 +177,19 @@ public class widgetManager {
                     ArrayList<tagItemStateVO> listState = adapter.getItems();
 
                     // parse colors
-                    String color[] = content.split(",");
-                    int color_index = 0;
-                    for (int i = 0; i < listState.size() && color_index < color.length; ++i) {
-                        tagItemStateVO tmp = listState.get(i);
-                        if (tmp.getTitle().equals(color[color_index])) {
-                            Log.d("tag test", color[color_index]);
-                            listState.get(i).setSelected(true);
-                            ++color_index;
+                    if (content.length() >= 0) {
+                        String color[] = content.split(",");
+                        int color_index = 0;
+                        for (int i = 0; i < listState.size() && color_index < color.length; ++i) {
+                            tagItemStateVO tmp = listState.get(i);
+                            if (tmp.getTitle().equals(color[color_index])) {
+                                Log.d("tag test", color[color_index]);
+                                listState.get(i).setSelected(true);
+                                ++color_index;
+                            }
                         }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
                 ++counter;
             }
