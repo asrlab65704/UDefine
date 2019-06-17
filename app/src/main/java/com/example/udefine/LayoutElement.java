@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,10 @@ public class LayoutElement extends AppCompatActivity {
     public void save_element(View view) {
 
         component_list.add(mElementSpinner.getSelectedItemPosition() + 1);
+        if (mWidgetTitle.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please insert title", Toast.LENGTH_LONG).show();
+            return;
+        }
         component_title.add(mWidgetTitle.getText().toString());
 
         Bundle bundle = new Bundle();
@@ -84,6 +89,10 @@ public class LayoutElement extends AppCompatActivity {
         intent.putExtras(bundle);
 
         setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void cancel_element(View view) {
         finish();
     }
 }

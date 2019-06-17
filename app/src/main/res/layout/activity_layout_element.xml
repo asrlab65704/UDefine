@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/cancel_button"
+        android:onClick="cancel_element"
         app:layout_anchor="@+id/include3"
         app:layout_anchorGravity="right|bottom" />
 

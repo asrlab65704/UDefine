@@ -59,6 +59,14 @@ public class NewLayout extends AppCompatActivity {
         component_list.add(1);
         component_title.add("Title");
 
+        // Add default time
+        component_list.add(2);
+        component_title.add("Time");
+
+        // Add default tag
+        component_list.add(3);
+        component_title.add("Tag");
+
         parentLinear = findViewById(R.id.newLayoutLinear);
         widgetsManager = new widgetManager(this, parentLinear,
                 getSupportFragmentManager());
@@ -85,7 +93,12 @@ public class NewLayout extends AppCompatActivity {
 
     public void saveLayout(View view) {
         // save LayoutList into DB
-        LayoutList new_layoutlist = new LayoutList(mNewLayoutName.getText().toString());
+        String layoutName = mNewLayoutName.getText().toString();
+        if (layoutName.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please enter layout name", Toast.LENGTH_LONG).show();
+            return;
+        }
+        LayoutList new_layoutlist = new LayoutList(layoutName);
         mViewModel.inserLayoutList(new_layoutlist);
 
         // save Layouts into DB
@@ -96,7 +109,7 @@ public class NewLayout extends AppCompatActivity {
 
     public void deleteLayoutElement(View view) {
         // delete the last layout
-        if (component_list.size() > 1) {
+        if (component_list.size() > 3) {
             // Remove deleted widget
             component_list.remove(component_list.size() - 1);
             component_title.remove(component_title.size() - 1);
@@ -104,7 +117,7 @@ public class NewLayout extends AppCompatActivity {
             parentLinear.removeAllViews();
             widgetsManager.generate(component_list, component_title);
         } else {
-            String warning_msg = "You can not remove Title";
+            String warning_msg = "You can not remove essential widgets";
             Toast warning = Toast.makeText(NewLayout.this,
                     warning_msg, Toast.LENGTH_SHORT);
             warning.show();
