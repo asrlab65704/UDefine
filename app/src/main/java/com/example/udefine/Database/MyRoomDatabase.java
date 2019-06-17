@@ -46,7 +46,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             // If we have no words, then create the initial list of words
-            //if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
+            if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
                 Log.d("TestMsg","Initiallize default data...");
 
                 /**創建預設LayoutList**/
@@ -55,6 +55,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
                 /**創建預設Layout**/
                 int DefaultLayoutID = mDao.getLastLayoutListID();
+                Log.d("db", Integer.toString(DefaultLayoutID));
                 String[] DefaultLayoutName={"標題", "時間", "Tag", "備註"};
                 int[] format = {1, 2, 3, 4};
                 for(int i=0; i< DefaultLayoutName.length; i++)
@@ -65,11 +66,15 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
                 /**創建預設NoteList**/
                 NoteList DefaultNoteList = new NoteList("幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", DefaultLayoutID);
+
                 mDao.insertNotelist(DefaultNoteList);
+            Log.d("db", "note insertion layoutID " +Integer.toString(DefaultNoteList.getLayoutID()));
 
                 /**創建預設Notes**/
                 int DefaultNoteID = mDao.getLastNoteListID();
-                String[] DefaultTitle={"標題", "時間", "Tag", "備註"};
+            Log.d("db", "note insertion noteID " +Integer.toString(DefaultNoteID));
+
+            String[] DefaultTitle={"標題", "時間", "Tag", "備註"};
                 String[] DefaultContent={"幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", "喜歡的話去Store按個5星QQ"};
 
                 for(int i=0; i< DefaultTitle.length; i++)
@@ -78,7 +83,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                     mDao.insertNote(DefaultNotes);
                 }
                 Log.d("TestMsg","Initiallize default data success.");
-            //}
+            }
             return null;
         }
     }

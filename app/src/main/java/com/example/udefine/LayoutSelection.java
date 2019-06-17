@@ -80,6 +80,10 @@ public class LayoutSelection extends AppCompatActivity {
         // shared preference
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         layout_id = mPreferences.getInt(LAYOUT_ID, 0);
+
+        // send new selected layout id to edit note activity
+        Intent intent = new Intent();
+
     }
 
     @Override
