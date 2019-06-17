@@ -197,14 +197,13 @@ public class widgetManager {
         }
     }
 
-    public ArrayList<String> getNoteTitleTimeTag() {
-        int id, counter = 0;
-        String content = "";
-        ArrayList<String> titleTimeTag = new ArrayList<String>();
+    public String[] getNoteTitleTimeTag() {
+        int id;
+        String ret[] = {null, null, null};
         Iterator<LinkedHashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
 
-        while (iterator.hasNext() && counter <= 2) {
+        while (iterator.hasNext()) {
             // get Title and View
             LinkedHashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
@@ -212,52 +211,52 @@ public class widgetManager {
 
             if (v instanceof EditText) {
                 // get Title
-                EditText e = (EditText) v;
-                content = e.getText().toString();
-                if (content.length() == 0) {
-                    content = null;
+                if (ret[0] == null) {
+                    EditText e = (EditText) v;
+                    ret[0] = e.getText().toString();
                 }
             } else if (v instanceof Button) {
                 // get date + time
                 Button b = (Button) v;
                 String tmp = b.getText().toString();
 
-                // if Date and Time is not set, set content to null
-                if (tmp.equals("Date")) {
-                    continue;
-                } else if (tmp.equals("Time")) {
-                    content = null;
-                } else {
-                    content = content + tmp;
-                    // date string, continue to get time
-                    if (tmp.contains("/")) {
-                        content = content + ",";
-                        continue;
+                if (!tmp.equals("Date")) {
+                    ret[1] = tmp;
+                }
+
+                // time
+                entry = iterator.next();
+                id = entry.getKey();
+                b = (Button) parentLinearLayout.findViewById(id);
+                tmp = b.getText().toString();
+                if (!tmp.equals("Time")) {
+                    if (ret[1] != null) {
+                        ret[1] = ret[1] + ", " + tmp;
+                    } else {
+                        ret[1] = tmp;
                     }
                 }
                 //Log.d("widget", title + ":" + b.getText().toString());
             } else if (v instanceof Spinner) {
                 Spinner s = (Spinner) v;
+                String tmp = "";
                 tagListAdapter adapter = (tagListAdapter) s.getAdapter();
                 ArrayList<tagItemStateVO> listState = adapter.getSelectedItems();
 
-                if (listState.size() == 0) {
-                    content = null;
-                } else {
-                    for (int i = 0; i < listState.size(); ++i) {
-                        tagItemStateVO tmp = listState.get(i);
-                        if (i != 0) {
-                            content = content + ',';
-                        }
-                        content = content + tmp.getTitle();
+                for (int i = 0; i < listState.size(); ++i) {
+                    tagItemStateVO tagItem = listState.get(i);
+                    if (i != 0) {
+                        tmp += ',';
                     }
+                    tmp += tagItem.getTitle();
+                }
+
+                if (tmp.length() > 0) {
+                    ret[2] = tmp;
                 }
             }
-            titleTimeTag.add(content);
-            content = "";
-            ++counter;
         }
-        return titleTimeTag;
+        return ret;
     }
 
     public ArrayList<Notes> getNoteContent(int noteID) {

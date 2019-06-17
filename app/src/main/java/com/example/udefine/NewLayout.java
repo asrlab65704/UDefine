@@ -59,14 +59,6 @@ public class NewLayout extends AppCompatActivity {
         component_list.add(1);
         component_title.add("Title");
 
-        // Add default time
-        component_list.add(2);
-        component_title.add("Time");
-
-        // Add default tag
-        component_list.add(3);
-        component_title.add("Tag");
-
         parentLinear = findViewById(R.id.newLayoutLinear);
         widgetsManager = new widgetManager(this, parentLinear,
                 getSupportFragmentManager());

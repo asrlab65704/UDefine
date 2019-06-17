@@ -83,15 +83,9 @@ public class EditNote extends AppCompatActivity {
         ArrayList<Notes> content = widgetsManager.getNoteContent(noteId);
         // TODO: update to DB
         //取得更新後的NoteList
-        ArrayList<String> updatedNoteListContent = widgetsManager.getNoteTitleTimeTag();
-        String noteTitle = updatedNoteListContent.get(0);
-        String time = updatedNoteListContent.get(1) == null ? null:
-                updatedNoteListContent.get(1);
-        String tag = updatedNoteListContent.get(2) == null ? null:
-                updatedNoteListContent.get(2);
-        NoteList updatedNoteList = new NoteList(noteTitle, time, tag, layoutId);
+        String NoteList[] = widgetsManager.getNoteTitleTimeTag();
+        NoteList updatedNoteList = new NoteList(NoteList[0], NoteList[1], NoteList[2], layoutId);
         updatedNoteList.setNoteID(noteId);
-        Log.d("db", tag);
         mViewModel.updateNoteList(updatedNoteList);
 
         //取得更新後的ArrayList<Notes>

@@ -71,7 +71,9 @@ public class NoteListAdapter extends
 
 
         noteListHolder.NoteTitleView.setText(mTitleCurrent);
-        noteListHolder.NoteTimeView.setText(mTimeCurrent);
+        if (mTimeCurrent != null) {
+            noteListHolder.NoteTimeView.setText(mTimeCurrent);
+        }
         noteListHolder.TagItemView.removeAllViews();
 
         /* element layout setting */
