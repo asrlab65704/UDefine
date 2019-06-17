@@ -4,7 +4,7 @@
 [Udefine_apk](https://drive.google.com/file/d/1ReuHhpVZESJsZEiAc6TaxDR8lUklckeS/view?usp=sharing)
 
 ## UDefine Activity Architecture
-![](picture/activity_relationship.png)
+![](picture/activity_relationship_re.png)
 
 ## list of tools, libraries, platform, etc.
 - RoomDatabase
