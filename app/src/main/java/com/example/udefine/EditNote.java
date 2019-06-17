@@ -79,21 +79,6 @@ public class EditNote extends AppCompatActivity {
         widgetsManager.fillContentToWidget(notes);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_note, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(EditNote.this, LayoutSelection.class);
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void saveNote(View view) {
         ArrayList<Notes> content = widgetsManager.getNoteContent(noteId);
         // TODO: update to DB
