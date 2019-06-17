@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.udefine.Database.LayoutList;
 import com.example.udefine.Database.Layouts;
@@ -98,6 +99,10 @@ public class NewNote extends AppCompatActivity {
         ArrayList<String> titleTimeTag = widgetsManager.getNoteTitleTimeTag();
         // Insert to note table
         String noteTitle = titleTimeTag.get(0);
+        if (noteTitle.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please insert title", Toast.LENGTH_LONG).show();
+            return;
+        }
         String time = titleTimeTag.get(1) == null ? null:
                 titleTimeTag.get(1);
         String tag = titleTimeTag.get(2) == null ? null:
