@@ -81,19 +81,14 @@ public class NewNote extends AppCompatActivity {
         layout_id = mPreferences.getInt(LAYOUT_ID, 0);
 
         // Get time, time, tag
-        ArrayList<String> titleTimeTag = widgetsManager.getNoteTitleTimeTag();
+        String titleTimeTag[] = widgetsManager.getNoteTitleTimeTag();
         // Insert to note table
-        String noteTitle = titleTimeTag.get(0);
-        if (noteTitle.length() == 0) {
+        if (titleTimeTag[0].length() == 0) {
             Toast.makeText(getApplicationContext(), "Please insert title", Toast.LENGTH_LONG).show();
             return;
         }
-        String time = titleTimeTag.get(1) == null ? null:
-                titleTimeTag.get(1);
-        String tag = titleTimeTag.get(2) == null ? null:
-                titleTimeTag.get(2);
 
-        mNoteList = new NoteList(noteTitle, time, tag, layout_id);
+        mNoteList = new NoteList(titleTimeTag[0], titleTimeTag[1], titleTimeTag[2], layout_id);
         mViewModel.insertNoteList(mNoteList);
 
         // Insert to note title/content table

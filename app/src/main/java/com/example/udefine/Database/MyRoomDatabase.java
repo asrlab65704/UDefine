@@ -46,43 +46,82 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             // If we have no words, then create the initial list of words
-            if (mDao.getAnyLayoutList().length < 1 & mDao.getAnyNoteList().length < 1) {
+            if (mDao.getAnyLayoutList().length < 1) {
                 Log.d("TestMsg","Initiallize default data...");
 
                 /**創建預設LayoutList**/
-                LayoutList DefaultLayoutList = new LayoutList("Default");
+                LayoutList DefaultLayoutList = new LayoutList("Quick Note");
                 mDao.insertLayoutlist(DefaultLayoutList);
 
                 /**創建預設Layout**/
                 int DefaultLayoutID = mDao.getLastLayoutListID();
-                Log.d("db", Integer.toString(DefaultLayoutID));
-                String[] DefaultLayoutName={"標題", "時間", "Tag", "備註"};
-                int[] format = {1, 2, 3, 4};
+                String[] DefaultLayoutName={"Title"};
+                int[] format = {1};
                 for(int i=0; i< DefaultLayoutName.length; i++)
                 {
                     Layouts DefaultLayouts = new Layouts(DefaultLayoutID,DefaultLayoutName[i],format[i]);
                     mDao.insertLayouts(DefaultLayouts);
                 }
 
-                /**創建預設NoteList**/
-                NoteList DefaultNoteList = new NoteList("幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", DefaultLayoutID);
+                /**創建預設LayoutList**/
+                LayoutList DefaultLayoutList1 = new LayoutList("Notification");
+                mDao.insertLayoutlist(DefaultLayoutList1);
 
+                /**創建預設Layout**/
+                int DefaultLayoutID1 = mDao.getLastLayoutListID();
+                String[] DefaultLayoutName1={"Title", "Time"};
+                int[] format1 = {1, 2};
+                for(int i=0; i< DefaultLayoutName1.length; i++)
+                {
+                    Layouts DefaultLayouts = new Layouts(DefaultLayoutID1,DefaultLayoutName1[i],format1[i]);
+                    mDao.insertLayouts(DefaultLayouts);
+                }
+
+                /**創建預設LayoutList**/
+                LayoutList DefaultLayoutList2 = new LayoutList("Note");
+                mDao.insertLayoutlist(DefaultLayoutList2);
+
+                /**創建預設Layout**/
+                int DefaultLayoutID2 = mDao.getLastLayoutListID();
+                String[] DefaultLayoutName2={"Title", "Time", "Tag"};
+                int[] format2 = {1, 2, 3};
+                for(int i=0; i< DefaultLayoutName2.length; i++)
+                {
+                    Layouts DefaultLayouts = new Layouts(DefaultLayoutID2,DefaultLayoutName2[i],format2[i]);
+                    mDao.insertLayouts(DefaultLayouts);
+                }
+
+                /**創建預設NoteList**/
+                NoteList DefaultNoteList = new NoteList("Demo", "2019/6/18,13:00", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", DefaultLayoutID2);
                 mDao.insertNotelist(DefaultNoteList);
-            Log.d("db", "note insertion layoutID " +Integer.toString(DefaultNoteList.getLayoutID()));
 
                 /**創建預設Notes**/
                 int DefaultNoteID = mDao.getLastNoteListID();
-            Log.d("db", "note insertion noteID " +Integer.toString(DefaultNoteID));
 
-            String[] DefaultTitle={"標題", "時間", "Tag", "備註"};
-                String[] DefaultContent={"幫App評分", "2019/5/26,09:30", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff", "喜歡的話去Store按個5星QQ"};
+                String[] DefaultTitle={"Title", "Time", "Tag"};
+                String[] DefaultContent={"Demo", "2019/6/18,13:00", "#00ff00,#ffff00,#ff751a,#ff0000,#993399,#6666ff"};
 
                 for(int i=0; i< DefaultTitle.length; i++)
                 {
                     Notes DefaultNotes = new Notes(DefaultNoteID, DefaultTitle[i], DefaultContent[i]);
                     mDao.insertNote(DefaultNotes);
                 }
-                Log.d("TestMsg","Initiallize default data success.");
+
+                /**創建預設NoteList**/
+                NoteList DefaultNoteList1 = new NoteList("幾爸昏", "13:00", "#00ff00,#ff751a,#993399", DefaultLayoutID2);
+                mDao.insertNotelist(DefaultNoteList1);
+
+                /**創建預設Notes**/
+                int DefaultNoteID1 = mDao.getLastNoteListID();
+
+                String[] DefaultTitle1={"Title", "Time", "Tag"};
+                String[] DefaultContent1={"幾爸昏", "13:00", "#00ff00,#ff751a,#993399"};
+
+                for(int i=0; i< DefaultTitle1.length; i++)
+                {
+                    Notes DefaultNotes = new Notes(DefaultNoteID1, DefaultTitle1[i], DefaultContent1[i]);
+                    mDao.insertNote(DefaultNotes);
+                }
             }
             return null;
         }
