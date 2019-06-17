@@ -68,7 +68,7 @@ public class NoteListAdapter extends
         Log.d("db", "main oncreate get noteid " + Integer.toString(mNoteList.get(position).getNoteID()));
         Log.d("db", "main oncreate get layoutid " + Integer.toString(mNoteList.get(position).getLayoutID()));
 
-        String[] mTagCut = mTagCurrent.split(",");
+
 
         noteListHolder.NoteTitleView.setText(mTitleCurrent);
         noteListHolder.NoteTimeView.setText(mTimeCurrent);
@@ -78,14 +78,17 @@ public class NoteListAdapter extends
         LinearLayout.LayoutParams tagLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        tagLayoutParams.width = 100;
-        tagLayoutParams.height = 20;
-        tagLayoutParams.setMargins(32, 16, 0, 16);
-        /* View */
-        for (int i = 0; i < mTagCut.length; i++) {
-            TextView tagView = new TextView(context);
-            tagView.setBackgroundColor(Color.parseColor(mTagCut[i]));
-            noteListHolder.TagItemView.addView(tagView, tagLayoutParams);
+        if (mTagCurrent != null) {
+            String[] mTagCut = mTagCurrent.split(",");
+            tagLayoutParams.width = 100;
+            tagLayoutParams.height = 20;
+            tagLayoutParams.setMargins(32, 16, 0, 16);
+            /* View */
+            for (int i = 0; i < mTagCut.length; i++) {
+                TextView tagView = new TextView(context);
+                tagView.setBackgroundColor(Color.parseColor(mTagCut[i]));
+                noteListHolder.TagItemView.addView(tagView, tagLayoutParams);
+            }
         }
 
         if (delete_note[position]) {
