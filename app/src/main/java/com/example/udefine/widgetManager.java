@@ -211,6 +211,9 @@ public class widgetManager {
                 // get Title
                 EditText e = (EditText) v;
                 content = e.getText().toString();
+                if (content.length() == 0) {
+                    content = null;
+                }
             } else if (v instanceof Button) {
                 // get date + time
                 Button b = (Button) v;
@@ -271,6 +274,9 @@ public class widgetManager {
             if (v instanceof EditText) {
                 EditText e = (EditText)v;
                 content = e.getText().toString();
+                if (content.length() == 0) {
+                    content = null;
+                }
                 //Log.d("widget", title + ":" + e.getText().toString());
             } else if (v instanceof Button) {
                 Button b = (Button)v;
