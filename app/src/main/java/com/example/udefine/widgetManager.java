@@ -20,6 +20,7 @@ import com.example.udefine.Database.Notes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class widgetManager {
@@ -29,7 +30,7 @@ public class widgetManager {
     private int margin;
 
     /* A hash map record View id and title */
-    private HashMap<Integer, String> title_id_list;
+    private LinkedHashMap<Integer, String> title_id_list;
 
     /*
      *  widget type:
@@ -44,7 +45,7 @@ public class widgetManager {
         mainContext = context;
         parentLinearLayout = parent;
         fragmentManager = fragment;
-        title_id_list = new HashMap<Integer, String>();
+        title_id_list = new LinkedHashMap<Integer, String>();
         margin = Math.round(16 * mainContext.getResources()
                 .getDisplayMetrics().density);
     }
@@ -136,12 +137,12 @@ public class widgetManager {
 
     public void fillContentToWidget(Notes[] notes) {
         int id, counter = 0;
-        Iterator<HashMap.Entry<Integer, String>> iterator =
+        Iterator<LinkedHashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
 
         while (iterator.hasNext() && counter <= notes.length) {
             // get Title and View
-            HashMap.Entry<Integer, String> entry = iterator.next();
+            LinkedHashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
             String title = notes[counter].getTitle();
             String content = notes[counter].getContent();
@@ -200,12 +201,12 @@ public class widgetManager {
         int id, counter = 0;
         String content = "";
         ArrayList<String> titleTimeTag = new ArrayList<String>();
-        Iterator<HashMap.Entry<Integer, String>> iterator =
+        Iterator<LinkedHashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
 
         while (iterator.hasNext() && counter <= 2) {
             // get Title and View
-            HashMap.Entry<Integer, String> entry = iterator.next();
+            LinkedHashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
             View v = parentLinearLayout.findViewById(id);
 
@@ -263,12 +264,12 @@ public class widgetManager {
         int id;
         String title, content = "";
         ArrayList<Notes> notes = new ArrayList<Notes>();
-        Iterator<HashMap.Entry<Integer, String>> iterator =
+        Iterator<LinkedHashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
 
         while (iterator.hasNext()) {
             // get Title and View
-            HashMap.Entry<Integer, String> entry = iterator.next();
+            LinkedHashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
             title = entry.getValue();
             View v = parentLinearLayout.findViewById(id);
@@ -331,13 +332,13 @@ public class widgetManager {
         int id, format = 0;
         String title;
         ArrayList<Layouts> layouts = new ArrayList<>();
-        Iterator<HashMap.Entry<Integer, String>> iterator =
+        Iterator<LinkedHashMap.Entry<Integer, String>> iterator =
                 title_id_list.entrySet().iterator();
         boolean time_button_repeat = false;
 
         while (iterator.hasNext()) {
             // get Title and View
-            HashMap.Entry<Integer, String> entry = iterator.next();
+            LinkedHashMap.Entry<Integer, String> entry = iterator.next();
             id = entry.getKey();
             title = entry.getValue();
             View v = parentLinearLayout.findViewById(id);
