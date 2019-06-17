@@ -77,21 +77,6 @@ public class NewNote extends AppCompatActivity {
         widgetsManager.generate(component_list, component_title);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_note, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(NewNote.this, LayoutSelection.class);
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void saveNote(View view) {
         layout_id = mPreferences.getInt(LAYOUT_ID, 0);
 
