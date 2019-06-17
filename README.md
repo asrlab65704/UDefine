@@ -3,6 +3,9 @@
 ## APK Download Link
 [Udefine_apk](https://drive.google.com/file/d/1ReuHhpVZESJsZEiAc6TaxDR8lUklckeS/view?usp=sharing)
 
+## Project Report slides
+[Udefine](https://drive.google.com/file/d/1cF81NqU1XE1W0vww78XrOPkSrwPwNm3R/view?usp=sharing)
+
 ## UDefine Activity Architecture
 ![](picture/activity_relationship_re.png)
 
