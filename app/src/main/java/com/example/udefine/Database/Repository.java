@@ -31,7 +31,9 @@ public class Repository {
 
         int layoutID=0;
         try {
-            layoutID=Integer.parseInt(new getLayoutIDFromNoteIDAsyncTask(mMyDao).execute().get());
+            int IntArr[] = new int[1];
+            IntArr[0] = noteID;
+            layoutID=Integer.parseInt(new getLayoutIDFromNoteIDAsyncTask(mMyDao).execute(IntArr).get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -91,7 +93,9 @@ public class Repository {
     public Notes [] getNotesFromNoteID(int id){
         Notes [] notes = null;
         try {
-            notes = new getNotesFromIDAsyncTask(mMyDao,id).execute().get();
+            int IntArr[] = new int[1];
+            IntArr[0] = id;
+            notes = new getNotesFromIDAsyncTask(mMyDao).execute(IntArr).get();
 
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -104,7 +108,9 @@ public class Repository {
     public Layouts[] getLayoutsFromLayoutID(int id){
         Layouts [] layouts =null;
         try {
-            layouts = new getLayoutsFromLayoutIDAsyncTask(mMyDao,id).execute().get();
+            int IntArr[] = new int[1];
+            IntArr[0] = id;
+            layouts = new getLayoutsFromLayoutIDAsyncTask(mMyDao).execute(IntArr).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -600,18 +606,16 @@ public class Repository {
 
     }
 
-    private static class getNotesFromIDAsyncTask extends AsyncTask<Void, Void, Notes []> {
+    private static class getNotesFromIDAsyncTask extends AsyncTask<int[], Void, Notes []> {
         private MyDao mAsyncTaskDao;
-        private int noteID;
 
-        getNotesFromIDAsyncTask(MyDao dao,int noteID) {
+        getNotesFromIDAsyncTask(MyDao dao) {
             mAsyncTaskDao = dao;
-            this.noteID = noteID;
         }
 
         @Override
-        protected Notes [] doInBackground(Void... voids) {
-            Notes [] NumberOfNotes = mAsyncTaskDao.getNotesFromID(noteID);
+        protected Notes [] doInBackground(final int[]... params) {
+            Notes [] NumberOfNotes = mAsyncTaskDao.getNotesFromID(params[0][0]);
             return NumberOfNotes;
         }
 
@@ -619,18 +623,16 @@ public class Repository {
 
 
 
-    private static class getLayoutsFromLayoutIDAsyncTask extends AsyncTask<Void, Void, Layouts []> {
+    private static class getLayoutsFromLayoutIDAsyncTask extends AsyncTask<int[], Void, Layouts []> {
         private MyDao mAsyncTaskDao;
-        private int noteID;
 
-        getLayoutsFromLayoutIDAsyncTask(MyDao dao,int noteID) {
+        getLayoutsFromLayoutIDAsyncTask(MyDao dao) {
             mAsyncTaskDao = dao;
-            this.noteID = noteID;
         }
 
         @Override
-        protected Layouts [] doInBackground(Void... voids) {
-            Layouts [] layouts = mAsyncTaskDao.getLayoutsFromLayoutID(noteID);
+        protected Layouts [] doInBackground(final int[]... params) {
+            Layouts [] layouts = mAsyncTaskDao.getLayoutsFromLayoutID(params[0][0]);
             return layouts;
         }
 
