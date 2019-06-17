@@ -91,4 +91,8 @@ public class LayoutElement extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    public void cancel_element(View view) {
+        finish();
+    }
 }
