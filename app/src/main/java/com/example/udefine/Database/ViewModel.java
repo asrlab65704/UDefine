@@ -99,6 +99,13 @@ public class ViewModel extends AndroidViewModel {
         }
     }
 
+    public void editNote(int noteID,ArrayList<Notes> notes){
+        mRepository.deleteNote(noteID);
+        for(Notes note:notes){
+            mRepository.insertNote(note);
+        }
+    }
+
     public void updateNote(Notes notes)
     {
         mRepository.updateNote(notes);
@@ -109,6 +116,8 @@ public class ViewModel extends AndroidViewModel {
             mRepository.updateNote(note);
         }
     }
+
+
 
     public void updateNoteList(NoteList noteList)
     {

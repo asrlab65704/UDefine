@@ -40,6 +40,10 @@ public class tagListAdapter extends ArrayAdapter<tagItemStateVO> {
         return selected;
     }
 
+    public ArrayList<tagItemStateVO> getItems() {
+        return listState;
+    }
+
     @Override
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {

@@ -8,6 +8,7 @@ import android.os.Debug;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,8 @@ public class NoteListAdapter extends
         String mTitleCurrent = mNoteList.get(position).getTitle();
         String mTimeCurrent = mNoteList.get(position).getTime();
         String mTagCurrent = mNoteList.get(position).getTag();
+        Log.d("db", "main oncreate get noteid " + Integer.toString(mNoteList.get(position).getNoteID()));
+        Log.d("db", "main oncreate get layoutid " + Integer.toString(mNoteList.get(position).getLayoutID()));
 
         String[] mTagCut = mTagCurrent.split(",");
 
@@ -117,6 +120,7 @@ public class NoteListAdapter extends
             NoteTimeView = itemView.findViewById(R.id.note_time);
             NoteItemView = itemView.findViewById(R.id.note_item);
             TagItemView = itemView.findViewById(R.id.tag_linear);
+
             this.mAdapter = adapter;
 
             NoteItemView.setOnClickListener(new View.OnClickListener() {
@@ -127,9 +131,11 @@ public class NoteListAdapter extends
                         delete_note[getAdapterPosition()] = !delete_note[getAdapterPosition()];
                         notifyDataSetChanged();
                     } else {
+                        int noteID = mNoteList.get(getAdapterPosition()).getNoteID();
+                        Log.d("db", "from main activity noteID " + Integer.toString(noteID));
                         Intent intent = new Intent(context, EditNote.class);
                         // send note ID to EditNote Activity
-                        intent.putExtra(EDIT_NOTE_ID, 1);
+                        intent.putExtra(EDIT_NOTE_ID, noteID);
                         context.startActivity(intent);
                     }
                 }

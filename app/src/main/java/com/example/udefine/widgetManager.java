@@ -134,6 +134,66 @@ public class widgetManager {
         title_id_list.remove(title_id_list.size() - 1);
     }
 
+    public void fillContentToWidget(Notes[] notes) {
+        int id, counter = 0;
+        Iterator<HashMap.Entry<Integer, String>> iterator =
+                title_id_list.entrySet().iterator();
+
+        while (iterator.hasNext() && counter <= notes.length) {
+            // get Title and View
+            HashMap.Entry<Integer, String> entry = iterator.next();
+            id = entry.getKey();
+            String title = notes[counter].getTitle();
+            String content = notes[counter].getContent();
+            View v = parentLinearLayout.findViewById(id);
+
+            // check if the title are same
+            if (entry.getValue().equals(title)) {
+                if (v instanceof EditText) {
+                    // set Title
+                    EditText e = (EditText) v;
+                    e.setText(content);
+                } else if (v instanceof Button) {
+                    Button b = (Button) v;
+                    if (content != null) {
+                        String dateTime[] = content.split(",");
+                        // set date
+                        b.setText(dateTime[0]);
+
+                        // set time button
+                        entry = iterator.next();
+                        b = (Button) parentLinearLayout.findViewById(entry.getKey());
+                        b.setText(dateTime[1]);
+                    } else {
+                        b.setText("Date");
+                        // set time button
+                        entry = iterator.next();
+                        b = (Button) parentLinearLayout.findViewById(entry.getKey());
+                        b.setText("Time");
+                    }
+                } else if (v instanceof Spinner) {
+                    Spinner s = (Spinner) v;
+                    tagListAdapter adapter = (tagListAdapter) s.getAdapter();
+                    ArrayList<tagItemStateVO> listState = adapter.getItems();
+
+                    // parse colors
+                    String color[] = content.split(",");
+                    int color_index = 0;
+                    for (int i = 0; i < listState.size() && color_index < color.length; ++i) {
+                        tagItemStateVO tmp = listState.get(i);
+                        if (tmp.getTitle().equals(color[color_index])) {
+                            Log.d("tag test", color[color_index]);
+                            listState.get(i).setSelected(true);
+                            ++color_index;
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                ++counter;
+            }
+        }
+    }
+
     public ArrayList<String> getNoteTitleTimeTag() {
         int id, counter = 0;
         String content = "";
